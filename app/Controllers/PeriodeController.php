@@ -223,10 +223,6 @@ class PeriodeController extends BaseController
                 'vi'          => $item['vi'],
                 'peringkat'   => $item['peringkat'],
                 'kategori'    => $item['kategori'],
-                'detail_json' => json_encode([
-                    'matrix_r' => $item['matrix_r'],
-                    'matrix_w' => $item['matrix_w'],
-                ]),
             ]);
         }
 

@@ -128,273 +128,133 @@
     </div>
   </div>
 
-  <!-- Tabs Navigation for Detail Matriks SAW -->
+  <!-- Tabel Hasil: Peringkat & Kategori -->
   <div class="card card-modern">
-    <div class="card-header bg-white p-3 border-bottom">
-      <ul class="nav nav-tabs nav-tabs-modern border-0" id="sawTabs" role="tablist">
-        <li class="nav-item" role="presentation">
-          <button class="nav-link active" id="tab-leaderboard-btn" data-bs-toggle="tab" data-bs-target="#tab-leaderboard" type="button" role="tab">
-            <i class="bi bi-trophy-fill me-1 text-warning"></i> Peringkat & Kategori
-          </button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link" id="tab-matriks-x-btn" data-bs-toggle="tab" data-bs-target="#tab-matriks-x" type="button" role="tab">
-            <i class="bi bi-grid-3x3 me-1 text-primary"></i> 1. Tabel Nilai Lapangan Terkonversi
-          </button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link" id="tab-matriks-r-btn" data-bs-toggle="tab" data-bs-target="#tab-matriks-r" type="button" role="tab">
-            <i class="bi bi-calculator me-1 text-info"></i> 2. Tabel Skala Standar (0 - 1)
-          </button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link" id="tab-matriks-w-btn" data-bs-toggle="tab" data-bs-target="#tab-matriks-w" type="button" role="tab">
-            <i class="bi bi-pie-chart me-1 text-success"></i> 3. Tabel Kontribusi Nilai Kriteria & Skor Akhir
-          </button>
-        </li>
-      </ul>
+    <div class="card-header bg-white py-3 px-4 border-bottom d-flex flex-wrap align-items-center justify-content-between gap-2">
+      <div class="d-flex align-items-center gap-2">
+        <i class="bi bi-trophy-fill text-warning fs-5"></i>
+        <h5 class="fw-bold mb-0 text-dark">Peringkat & Kategori Kinerja Proyek</h5>
+      </div>
+      <span class="badge bg-light text-secondary border">Total: <?= count($hasilList) ?> Proyek Terdaftar</span>
     </div>
 
     <div class="card-body p-0">
-      <div class="tab-content" id="sawTabsContent">
-        
-        <!-- TAB 1: PERINGKAT & KATEGORI (MAIN LEADERBOARD) -->
-        <div class="tab-pane fade show active" id="tab-leaderboard" role="tabpanel">
-          <div class="table-responsive">
-            <table class="table table-modern table-hover align-middle mb-0">
-              <thead>
-                <tr>
-                  <th style="width: 80px;" class="text-center">Peringkat</th>
-                  <th>Kode & Nama Proyek</th>
-                  <th>Jenis</th>
-                  <th>Klien & Lokasi</th>
-                  <th class="text-end">Nilai RAB (Rp)</th>
-                  <th class="text-center">Skor Kinerja Akhir</th>
-                  <th class="text-center">Kategori Kinerja</th>
-                </tr>
-              </thead>
-              <tbody>
-                <?php foreach ($hasilList as $h): ?>
-                  <tr>
-                    <!-- Rank Badge -->
-                    <td class="text-center">
-                      <?php if ($h['peringkat'] == 1): ?>
-                        <span class="rank-badge rank-gold" title="Peringkat 1">1</span>
-                      <?php elseif ($h['peringkat'] == 2): ?>
-                        <span class="rank-badge rank-silver" title="Peringkat 2">2</span>
-                      <?php elseif ($h['peringkat'] == 3): ?>
-                        <span class="rank-badge rank-bronze" title="Peringkat 3">3</span>
-                      <?php else: ?>
-                        <span class="rank-badge rank-normal"><?= $h['peringkat'] ?></span>
-                      <?php endif; ?>
-                    </td>
+      <div class="table-responsive">
+        <table class="table table-modern table-hover align-middle mb-0">
+          <thead>
+            <tr>
+              <th style="width: 80px;" class="text-center">Peringkat</th>
+              <th>Kode & Nama Proyek</th>
+              <th>Jenis</th>
+              <th>Klien & Lokasi</th>
+              <th class="text-end">Nilai RAB (Rp)</th>
+              <th class="text-center">Skor Kinerja Akhir</th>
+              <th class="text-center">Kategori Kinerja</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($hasilList as $h): ?>
+              <tr>
+                <!-- Rank Badge -->
+                <td class="text-center">
+                  <?php if ($h['peringkat'] == 1): ?>
+                    <span class="rank-badge rank-gold" title="Peringkat 1">1</span>
+                  <?php elseif ($h['peringkat'] == 2): ?>
+                    <span class="rank-badge rank-silver" title="Peringkat 2">2</span>
+                  <?php elseif ($h['peringkat'] == 3): ?>
+                    <span class="rank-badge rank-bronze" title="Peringkat 3">3</span>
+                  <?php else: ?>
+                    <span class="rank-badge rank-normal"><?= $h['peringkat'] ?></span>
+                  <?php endif; ?>
+                </td>
 
-                    <!-- Nama Proyek -->
-                    <td>
-                      <div class="fw-bold text-dark fs-6"><?= esc($h['proyek_nama']) ?></div>
-                      <span class="badge bg-light text-secondary border font-monospace"><?= esc($h['proyek_kode']) ?></span>
-                    </td>
+                <!-- Nama Proyek -->
+                <td>
+                  <div class="fw-bold text-dark fs-6"><?= esc($h['proyek_nama']) ?></div>
+                  <span class="badge bg-light text-secondary border font-monospace"><?= esc($h['proyek_kode']) ?></span>
+                </td>
 
-                    <!-- Jenis -->
-                    <td>
-                      <span class="badge bg-light text-dark border text-capitalize"><?= esc($h['jenis']) ?></span>
-                    </td>
+                <!-- Jenis -->
+                <td>
+                  <span class="badge bg-light text-dark border text-capitalize"><?= esc($h['jenis']) ?></span>
+                </td>
 
-                    <!-- Klien & Lokasi -->
-                    <td class="small">
-                      <div class="fw-semibold text-dark"><?= esc($h['klien']) ?></div>
-                      <div class="text-muted" style="font-size:0.75rem;"><i class="bi bi-geo-alt me-1"></i><?= esc($h['lokasi']) ?></div>
-                    </td>
+                <!-- Klien & Lokasi -->
+                <td class="small">
+                  <div class="fw-semibold text-dark"><?= esc($h['klien']) ?></div>
+                  <div class="text-muted" style="font-size:0.75rem;"><i class="bi bi-geo-alt me-1"></i><?= esc($h['lokasi']) ?></div>
+                </td>
 
-                    <!-- RAB -->
-                    <td class="text-end mono-num text-dark fw-bold">
-                      Rp <?= number_format((float)$h['nilai_rab'], 0, ',', '.') ?>
-                    </td>
+                <!-- RAB -->
+                <td class="text-end mono-num text-dark fw-bold">
+                  Rp <?= number_format((float)$h['nilai_rab'], 0, ',', '.') ?>
+                </td>
 
-                    <!-- Vi -->
-                    <td class="text-center">
-                      <div class="fs-5 fw-bold mono-num text-dark">
-                        <?= number_format((float)$h['vi'], 2) ?>
-                      </div>
-                      <div class="text-muted" style="font-size:0.72rem;">(<?= number_format((float)$h['vi'], 4) ?>)</div>
-                    </td>
+                <!-- Vi -->
+                <td class="text-center">
+                  <div class="fs-5 fw-bold mono-num text-dark">
+                    <?= number_format((float)$h['vi'], 2) ?>
+                  </div>
+                  <div class="text-muted" style="font-size:0.72rem;">(<?= number_format((float)$h['vi'], 4) ?>)</div>
+                </td>
 
-                    <!-- Kategori Badge -->
-                    <td class="text-center">
-                      <?php if ($h['kategori'] === 'Baik'): ?>
-                        <span class="badge-kategori badge-baik">
-                          <i class="bi bi-check-circle-fill"></i> Baik
-                        </span>
-                      <?php elseif ($h['kategori'] === 'Perlu Perhatian'): ?>
-                        <span class="badge-kategori badge-perhatian">
-                          <i class="bi bi-exclamation-triangle-fill"></i> Perlu Perhatian
-                        </span>
-                      <?php else: ?>
-                        <span class="badge-kategori badge-berisiko">
-                          <i class="bi bi-x-circle-fill"></i> Berisiko/Terlambat
-                        </span>
-                      <?php endif; ?>
-                    </td>
-                  </tr>
-                <?php endforeach; ?>
-              </tbody>
-            </table>
+                <!-- Kategori Badge -->
+                <td class="text-center">
+                  <?php if ($h['kategori'] === 'Baik'): ?>
+                    <span class="badge-kategori badge-baik">
+                      <i class="bi bi-check-circle-fill"></i> Baik
+                    </span>
+                  <?php elseif ($h['kategori'] === 'Perlu Perhatian'): ?>
+                    <span class="badge-kategori badge-perhatian">
+                      <i class="bi bi-exclamation-triangle-fill"></i> Perlu Perhatian
+                    </span>
+                  <?php else: ?>
+                    <span class="badge-kategori badge-berisiko">
+                      <i class="bi bi-x-circle-fill"></i> Berisiko/Terlambat
+                    </span>
+                  <?php endif; ?>
+                </td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Rekomendasi Singkat Manajemen -->
+      <div class="p-4 bg-light border-top">
+        <h6 class="fw-bold mb-3 text-dark"><i class="bi bi-lightbulb-fill text-warning me-2"></i>Rekomendasi Tindakan Manajemen (Berdasarkan Kategori)</h6>
+        <div class="row g-3">
+          <div class="col-md-4">
+            <div class="p-3 bg-white rounded border border-success-subtle h-100">
+              <div class="d-flex align-items-center gap-2 mb-2 text-success fw-bold">
+                <i class="bi bi-check-circle-fill"></i> Kategori Baik (Skor Minimal <?= number_format($batasBaik, 2) ?> ke Atas)
+              </div>
+              <p class="small text-muted mb-0">
+                Proyek berjalan sesuai Kurva S, efisiensi anggaran terjaga, dan dokumentasi foto lapangan lengkap. Pertahankan ritme kerja dan koordinasi mitra.
+              </p>
+            </div>
           </div>
-
-          <!-- Rekomendasi Singkat Manajemen -->
-          <div class="p-4 bg-light border-top">
-            <h6 class="fw-bold mb-3 text-dark"><i class="bi bi-lightbulb-fill text-warning me-2"></i>Rekomendasi Tindakan Manajemen (Berdasarkan Kategori)</h6>
-            <div class="row g-3">
-              <div class="col-md-4">
-                <div class="p-3 bg-white rounded border border-success-subtle h-100">
-                  <div class="d-flex align-items-center gap-2 mb-2 text-success fw-bold">
-                    <i class="bi bi-check-circle-fill"></i> Kategori Baik (Skor Minimal <?= number_format($batasBaik, 2) ?> ke Atas)
-                  </div>
-                  <p class="small text-muted mb-0">
-                    Proyek berjalan sesuai Kurva S, efisiensi anggaran terjaga, dan dokumentasi foto lapangan lengkap. Pertahankan ritme kerja dan koordinasi mitra.
-                  </p>
-                </div>
+          <div class="col-md-4">
+            <div class="p-3 bg-white rounded border border-warning-subtle h-100">
+              <div class="d-flex align-items-center gap-2 mb-2 text-warning fw-bold">
+                <i class="bi bi-exclamation-triangle-fill"></i> Perlu Perhatian (Skor <?= number_format($batasPerhatian, 2) ?> s/d <?= number_format($batasBaik - 0.01, 2) ?>)
               </div>
-              <div class="col-md-4">
-                <div class="p-3 bg-white rounded border border-warning-subtle h-100">
-                  <div class="d-flex align-items-center gap-2 mb-2 text-warning fw-bold">
-                    <i class="bi bi-exclamation-triangle-fill"></i> Perlu Perhatian (Skor <?= number_format($batasPerhatian, 2) ?> s/d <?= number_format($batasBaik - 0.01, 2) ?>)
-                  </div>
-                  <p class="small text-muted mb-0">
-                    Terdapat deviasi ringan pada progres fisik, kenaikan pengeluaran biaya, atau keterlambatan waktu serah terima. Lakukan rapat evaluasi berkala segera.
-                  </p>
-                </div>
+              <p class="small text-muted mb-0">
+                Terdapat deviasi ringan pada progres fisik, kenaikan pengeluaran biaya, atau keterlambatan waktu serah terima. Lakukan rapat evaluasi berkala segera.
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="p-3 bg-white rounded border border-danger-subtle h-100">
+              <div class="d-flex align-items-center gap-2 mb-2 text-danger fw-bold">
+                <i class="bi bi-exclamation-octagon-fill"></i> Berisiko / Terlambat (Skor di Bawah <?= number_format($batasPerhatian, 2) ?>)
               </div>
-              <div class="col-md-4">
-                <div class="p-3 bg-white rounded border border-danger-subtle h-100">
-                  <div class="d-flex align-items-center gap-2 mb-2 text-danger fw-bold">
-                    <i class="bi bi-exclamation-octagon-fill"></i> Berisiko / Terlambat (Skor di Bawah <?= number_format($batasPerhatian, 2) ?>)
-                  </div>
-                  <p class="small text-muted mb-0">
-                    Prioritas intervensi penanganan segera! Terapkan percepatan jadwal, penambahan tenaga kerja, evaluasi hambatan teknis, dan audit pengeluaran RAB.
-                  </p>
-                </div>
-              </div>
+              <p class="small text-muted mb-0">
+                Prioritas intervensi penanganan segera! Terapkan percepatan jadwal, penambahan tenaga kerja, evaluasi hambatan teknis, dan audit pengeluaran RAB.
+              </p>
             </div>
           </div>
         </div>
-
-        <!-- TAB 2: MATRIKS KEPUTUSAN X -->
-        <div class="tab-pane fade" id="tab-matriks-x" role="tabpanel">
-          <div class="p-3 bg-light border-bottom small text-muted">
-            <i class="bi bi-info-circle me-1"></i> Tabel ini menyajikan konversi data lapangan setiap proyek ke dalam 5 kriteria standar (Kurva S, Biaya RAB, Foto Progres, Kualitas BAST, dan Hari Keterlambatan).
-          </div>
-          <div class="table-responsive">
-            <table class="table table-modern table-bordered align-middle mb-0">
-              <thead class="table-light">
-                <tr>
-                  <th style="width: 50px;">No</th>
-                  <th>Proyek Alternatif</th>
-                  <?php foreach ($kriterias as $k): ?>
-                    <th class="text-center">
-                      <div><?= esc($k['kode']) ?> - <?= esc($k['nama']) ?></div>
-                      <span class="badge <?= ($k['atribut'] === 'benefit') ? 'bg-success' : 'bg-danger' ?> small" style="font-size:0.65rem;">
-                        <?= ucfirst($k['atribut']) ?> (W: <?= (float)$k['bobot'] ?>)
-                      </span>
-                    </th>
-                  <?php endforeach; ?>
-                </tr>
-              </thead>
-              <tbody>
-                <?php $no = 1; foreach ($hasilList as $h): ?>
-                  <tr>
-                    <td class="text-muted small"><?= $no++ ?></td>
-                    <td class="fw-bold text-dark"><?= esc($h['proyek_nama']) ?></td>
-                    <td class="text-center mono-num"><?= number_format((float)$h['c1'], 2) ?></td>
-                    <td class="text-center mono-num"><?= number_format((float)$h['c2'], 2) ?></td>
-                    <td class="text-center mono-num"><?= number_format((float)$h['c3'], 2) ?></td>
-                    <td class="text-center mono-num"><?= number_format((float)$h['c4'], 2) ?></td>
-                    <td class="text-center mono-num"><?= number_format((float)$h['c5'], 2) ?></td>
-                  </tr>
-                <?php endforeach; ?>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- TAB 3: MATRIKS NORMALISASI R -->
-        <div class="tab-pane fade" id="tab-matriks-r" role="tabpanel">
-          <div class="p-3 bg-light border-bottom small text-muted">
-            <i class="bi bi-info-circle me-1"></i> Penyesuaian Skala: Kriteria <strong>Keuntungan (Benefit)</strong> dihitung proporsional terhadap nilai tertinggi, sedangkan kriteria <strong>Biaya/Waktu (Cost)</strong> dihitung efisiensinya terhadap nilai terendah (skala 0 s/d 1).
-          </div>
-          <div class="table-responsive">
-            <table class="table table-modern table-bordered align-middle mb-0">
-              <thead class="table-light">
-                <tr>
-                  <th style="width: 50px;">No</th>
-                  <th>Proyek Alternatif</th>
-                  <?php foreach ($kriterias as $k): ?>
-                    <th class="text-center">
-                      <div><?= esc($k['kode']) ?> (<?= ucfirst($k['atribut']) ?>)</div>
-                    </th>
-                  <?php endforeach; ?>
-                </tr>
-              </thead>
-              <tbody>
-                <?php $no = 1; foreach ($hasilList as $h): ?>
-                  <tr>
-                    <td class="text-muted small"><?= $no++ ?></td>
-                    <td class="fw-bold text-dark"><?= esc($h['proyek_nama']) ?></td>
-                    <?php foreach ($kriterias as $k): ?>
-                      <td class="text-center mono-num">
-                        <?= number_format((float)($h['matrix_r'][$k['kode']] ?? 0), 4) ?>
-                      </td>
-                    <?php endforeach; ?>
-                  </tr>
-                <?php endforeach; ?>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- TAB 4: MATRIKS TERBOBOT & PREFERENSI VI -->
-        <div class="tab-pane fade" id="tab-matriks-w" role="tabpanel">
-          <div class="p-3 bg-light border-bottom small text-muted">
-            <i class="bi bi-info-circle me-1"></i> Tabel ini mengalikan nilai skala standar dengan persentase bobot masing-masing kriteria. Penjumlahan seluruh nilai menghasilkan Skor Kinerja Akhir.
-          </div>
-          <div class="table-responsive">
-            <table class="table table-modern table-bordered align-middle mb-0">
-              <thead class="table-light">
-                <tr>
-                  <th style="width: 50px;">No</th>
-                  <th>Proyek Alternatif</th>
-                  <?php foreach ($kriterias as $k): ?>
-                    <th class="text-center">
-                      <div><?= esc($k['kode']) ?> &times; <?= (float)$k['bobot'] ?></div>
-                    </th>
-                  <?php endforeach; ?>
-                  <th class="text-center table-warning">Skor Kinerja Akhir</th>
-                  <th class="text-center">Peringkat</th>
-                </tr>
-              </thead>
-              <tbody>
-                <?php $no = 1; foreach ($hasilList as $h): ?>
-                  <tr>
-                    <td class="text-muted small"><?= $no++ ?></td>
-                    <td class="fw-bold text-dark"><?= esc($h['proyek_nama']) ?></td>
-                    <?php foreach ($kriterias as $k): ?>
-                      <td class="text-center mono-num text-muted">
-                        <?= number_format((float)($h['matrix_w'][$k['kode']] ?? 0), 4) ?>
-                      </td>
-                    <?php endforeach; ?>
-                    <td class="text-center mono-num fw-bold fs-6 text-dark table-warning">
-                      <?= number_format((float)$h['vi'], 4) ?>
-                    </td>
-                    <td class="text-center fw-bold">
-                      #<?= $h['peringkat'] ?>
-                    </td>
-                  </tr>
-                <?php endforeach; ?>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
       </div>
     </div>
   </div>

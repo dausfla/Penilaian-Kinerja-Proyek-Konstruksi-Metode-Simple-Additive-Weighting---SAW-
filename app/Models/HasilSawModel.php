@@ -21,7 +21,6 @@ class HasilSawModel extends Model
         'vi',
         'peringkat',
         'kategori',
-        'detail_json',
     ];
     protected $useTimestamps    = false;
 

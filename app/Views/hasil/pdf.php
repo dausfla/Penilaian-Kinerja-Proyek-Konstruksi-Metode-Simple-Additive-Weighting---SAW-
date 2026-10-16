@@ -140,7 +140,7 @@
       <td style="width: 70%;">
         <div class="company-name"><?= esc($settings['nama_perusahaan'] ?? 'PT RANCANG BANGUN SEDAYA') ?></div>
         <div class="company-sub">General Contractor, Architecture & Project Management</div>
-        <div class="company-sub">Jl. Konstruksi Raya No. 88, Jakarta Selatan &bull; Telp: (021) 7890-1234</div>
+        <div class="company-sub"><?= esc($settings['alamat_perusahaan'] ?? '(Head Quarter): Pasirmulya, Kecamatan Bogor Barat, Kota Bogor, Jawa Barat 16118') ?></div>
       </td>
       <td style="width: 30%; text-align: right;">
         <div style="font-size: 11px; font-weight: bold; color: #d97706;">SISTEM PENDUKUNG KEPUTUSAN</div>
@@ -165,7 +165,7 @@
       <td style="font-weight: bold;">Jumlah Proyek</td>
       <td>: <?= count($hasilList) ?> Proyek</td>
       <td style="font-weight: bold;">Dicetak Oleh</td>
-      <td>: <?= esc($printedBy) ?></td>
+      <td>: <?= !empty($printedBy) && $printedBy !== 'Administrator' ? esc($printedBy) : 'Muhamad Firdaus' ?></td>
     </tr>
     <tr>
       <td style="font-weight: bold;">Ambang Batas</td>
@@ -245,7 +245,7 @@
         <div>Dibuat Oleh,</div>
         <div style="font-weight: bold;">Administrator SPK</div>
         <div class="sig-space"></div>
-        <div style="font-weight: bold; text-decoration: underline;"><?= esc($printedBy) ?></div>
+        <div style="font-weight: bold; text-decoration: underline;"><?= !empty($printedBy) && $printedBy !== 'Administrator' ? esc($printedBy) : 'Muhamad Firdaus' ?></div>
         <div style="color: #64748b;">Pengelola Sistem SPK</div>
       </td>
       <td>

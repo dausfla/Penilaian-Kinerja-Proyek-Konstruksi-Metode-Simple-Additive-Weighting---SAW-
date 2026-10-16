@@ -58,25 +58,16 @@ class HasilController extends BaseController
 
         // Check if this period has results
         $hasilList = $this->hasilSawModel->getHasilWithProyek($activePeriode['id']);
-        $kriterias = $this->kriteriaModel->orderBy('kode', 'ASC')->findAll();
         $settings  = $this->pengaturanModel->getAllAsMap();
 
-        // Decode details
-        $matrixR = [];
-        $matrixW = [];
         $kategoriCount = ['Baik' => 0, 'Perlu Perhatian' => 0, 'Berisiko/Terlambat' => 0];
 
-        foreach ($hasilList as &$h) {
-            $details = json_decode($h['detail_json'] ?? '{}', true);
-            $h['matrix_r'] = $details['matrix_r'] ?? [];
-            $h['matrix_w'] = $details['matrix_w'] ?? [];
-
+        foreach ($hasilList as $h) {
             $kat = $h['kategori'];
             if (isset($kategoriCount[$kat])) {
                 $kategoriCount[$kat]++;
             }
         }
-        unset($h);
 
         return view('hasil/index', [
             'title'          => 'Hasil Perangkingan SAW',
@@ -84,7 +75,6 @@ class HasilController extends BaseController
             'allPeriodes'    => $allPeriodes,
             'activePeriode'  => $activePeriode,
             'hasilList'      => $hasilList,
-            'kriterias'      => $kriterias,
             'kategoriCount'  => $kategoriCount,
             'batasBaik'      => (float)($settings['batas_baik'] ?? 0.80),
             'batasPerhatian' => (float)($settings['batas_perhatian'] ?? 0.60),
@@ -114,7 +104,7 @@ class HasilController extends BaseController
             'settings'       => $settings,
             'batasBaik'      => (float)($settings['batas_baik'] ?? 0.80),
             'batasPerhatian' => (float)($settings['batas_perhatian'] ?? 0.60),
-            'printedBy'      => session()->get('user_nama') ?? 'Administrator',
+            'printedBy'      => session()->get('user_nama') ?: 'Muhamad Firdaus',
             'printDate'      => date('d F Y H:i'),
         ]);
 

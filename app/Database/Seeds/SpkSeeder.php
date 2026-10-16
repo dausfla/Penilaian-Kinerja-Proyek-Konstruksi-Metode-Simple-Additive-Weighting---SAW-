@@ -15,7 +15,7 @@ class SpkSeeder extends Seeder
         if ($userCheck === 0) {
             $users = [
                 [
-                    'nama'          => 'Administrator SPK',
+                    'nama'          => 'Muhamad Firdaus',
                     'username'      => 'admin',
                     'password_hash' => password_hash('admin123', PASSWORD_BCRYPT),
                     'role'          => 'admin',

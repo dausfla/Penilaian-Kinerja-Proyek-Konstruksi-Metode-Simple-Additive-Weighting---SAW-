@@ -149,10 +149,15 @@ class DashboardController extends BaseController
         $skorFoto       = (int)$this->request->getPost('skor_foto_progres') ?: 5;
         $skorBast       = (int)$this->request->getPost('skor_bast') ?: 5;
 
-        $isOnTime  = $this->request->getPost('is_on_time');
-        $tglAktual = $this->request->getPost('tanggal_selesai_aktual');
+        $isOnTime      = $this->request->getPost('is_on_time');
+        $hariTerlambat = $this->request->getPost('hari_terlambat');
+        $tglAktual     = $this->request->getPost('tanggal_selesai_aktual');
 
-        if ($isOnTime === '1' || empty($tglAktual)) {
+        if ($isOnTime === '1' || ($hariTerlambat !== null && $hariTerlambat !== '' && (int)$hariTerlambat === 0)) {
+            $tglAktual = $tglRencana;
+        } elseif ($hariTerlambat !== null && $hariTerlambat !== '' && (int)$hariTerlambat > 0) {
+            $tglAktual = date('Y-m-d', strtotime($tglRencana . ' + ' . (int)$hariTerlambat . ' days'));
+        } elseif (empty($tglAktual)) {
             $tglAktual = $tglRencana;
         }
 

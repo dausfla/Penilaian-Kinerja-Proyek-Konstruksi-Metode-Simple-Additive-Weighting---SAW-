@@ -503,3 +503,25 @@ body {
     margin-left: 0;
   }
 }
+
+/* Navy background utility & Modal fixes */
+.bg-navy {
+  background-color: var(--slate-900) !important;
+  color: #ffffff !important;
+}
+
+.modal-dialog-scrollable {
+  max-height: calc(100vh - 2rem);
+}
+
+.modal-dialog-scrollable .modal-content {
+  max-height: calc(100vh - 2rem);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-dialog-scrollable .modal-body {
+  overflow-y: auto !important;
+  max-height: calc(100vh - 13rem) !important;
+}

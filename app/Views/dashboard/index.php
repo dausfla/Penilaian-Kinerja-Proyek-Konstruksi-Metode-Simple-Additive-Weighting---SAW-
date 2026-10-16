@@ -297,151 +297,155 @@
 </div>
 
 <!-- ========================================== -->
+<!-- ========================================== -->
 <!-- MODAL 1: TAMBAH & NILAI PROYEK BARU        -->
 <!-- ========================================== -->
 <div class="modal fade" id="modalTambahProyek" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-    <div class="modal-content border-0 shadow">
-      <form action="<?= site_url('dashboard/simpan') ?>" method="post">
-        <?= csrf_field() ?>
-        <input type="hidden" name="periode_id" value="<?= $activePeriode['id'] ?>">
+    <form action="<?= site_url('dashboard/simpan') ?>" method="post" class="modal-content border-0 shadow" style="max-height: 90vh;">
+      <?= csrf_field() ?>
+      <input type="hidden" name="periode_id" value="<?= $activePeriode['id'] ?>">
 
-        <div class="modal-header bg-navy text-white py-3 px-4">
-          <div class="d-flex align-items-center gap-2">
-            <i class="bi bi-plus-circle-fill text-warning fs-5"></i>
-            <div>
-              <h5 class="modal-title fw-bold text-white mb-0">Tambah & Nilai Proyek</h5>
-              <small class="text-white-50">Isi data proyek dan kondisi lapangan langsung dalam 1 form</small>
+      <div class="modal-header bg-navy text-white py-3 px-4" style="background-color: #0f172a !important;">
+        <div class="d-flex align-items-center gap-2">
+          <i class="bi bi-plus-circle-fill text-warning fs-5"></i>
+          <div>
+            <h5 class="modal-title fw-bold text-white mb-0">Tambah & Nilai Proyek</h5>
+            <small class="text-white-50">Isi data proyek dan kondisi lapangan langsung dalam 1 form</small>
+          </div>
+        </div>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body p-4" style="overflow-y: auto; max-height: calc(88vh - 130px);">
+        <!-- BAGIAN 1: IDENTITAS PROYEK -->
+        <div class="mb-4">
+          <h6 class="fw-bold text-dark border-bottom pb-2 d-flex align-items-center gap-2">
+            <span class="badge bg-primary">1</span>
+            <span>Identitas & Anggaran Proyek</span>
+          </h6>
+          <div class="row g-3 mt-1">
+            <div class="col-md-8">
+              <label class="form-label small fw-bold">Nama Proyek <span class="text-danger">*</span></label>
+              <input type="text" name="nama" class="form-control" placeholder="Contoh: Pembangunan Villa Modern 2 Lantai" required>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label small fw-bold">Kode Proyek</label>
+              <input type="text" name="kode" class="form-control font-monospace" placeholder="Contoh: PRJ-001 (Opsional)">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label small fw-bold">Jenis Proyek <span class="text-danger">*</span></label>
+              <select name="jenis" class="form-select" required>
+                <?php foreach ($jenisList as $j): ?>
+                  <option value="<?= $j ?>"><?= ucfirst($j) ?></option>
+                <?php endforeach; ?>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label small fw-bold">Klien / Pemilik <span class="text-danger">*</span></label>
+              <input type="text" name="klien" class="form-control" placeholder="Contoh: Bpk. Arya Pratama" required>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label small fw-bold">Lokasi Proyek <span class="text-danger">*</span></label>
+              <input type="text" name="lokasi" class="form-control" placeholder="Contoh: Pasirmulya, Bogor Barat" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">Nilai RAB Disepakati (Rp) <span class="text-danger">*</span></label>
+              <div class="input-group">
+                <span class="input-group-text bg-light fw-bold text-muted">Rp</span>
+                <input type="number" step="0.01" min="1" name="nilai_rab" id="addNilaiRab" class="form-control mono-num fw-bold text-dark" placeholder="850000000" required>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">Target Rencana Selesai <span class="text-danger">*</span></label>
+              <input type="date" name="tanggal_selesai_rencana" id="addTglRencana" class="form-control mono-num" required value="<?= date('Y-m-d', strtotime('+3 months')) ?>" onchange="syncAddDelay(document.getElementById('addHariTerlambat').value)">
             </div>
           </div>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
         </div>
 
-        <div class="modal-body p-4">
-          <!-- BAGIAN 1: IDENTITAS PROYEK -->
-          <div class="mb-4">
-            <h6 class="fw-bold text-dark border-bottom pb-2 d-flex align-items-center gap-2">
-              <span class="badge bg-primary">1</span>
-              <span>Identitas & Anggaran Proyek</span>
-            </h6>
-            <div class="row g-3 mt-1">
-              <div class="col-md-8">
-                <label class="form-label small fw-bold">Nama Proyek <span class="text-danger">*</span></label>
-                <input type="text" name="nama" class="form-control" placeholder="Contoh: Pembangunan Villa Modern 2 Lantai" required>
+        <!-- BAGIAN 2: NILAI LAPANGAN (SAW C1 s/d C5) -->
+        <div>
+          <h6 class="fw-bold text-dark border-bottom pb-2 d-flex align-items-center gap-2">
+            <span class="badge bg-warning text-dark">2</span>
+            <span>Realisasi Lapangan & Kinerja (Kriteria C1 - C5)</span>
+          </h6>
+          <div class="row g-3 mt-1">
+            <!-- C1: Progres Aktual -->
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">C1: Progres Fisik Aktual (%) <span class="text-danger">*</span></label>
+              <div class="input-group">
+                <input type="number" step="0.01" min="0" max="100" name="progres_aktual" class="form-control mono-num" placeholder="95.50" required>
+                <span class="input-group-text">%</span>
               </div>
-              <div class="col-md-4">
-                <label class="form-label small fw-bold">Kode Proyek</label>
-                <input type="text" name="kode" class="form-control font-monospace" placeholder="Contoh: PRJ-001 (Opsional)">
-              </div>
-              <div class="col-md-4">
-                <label class="form-label small fw-bold">Jenis Proyek <span class="text-danger">*</span></label>
-                <select name="jenis" class="form-select" required>
-                  <?php foreach ($jenisList as $j): ?>
-                    <option value="<?= $j ?>"><?= ucfirst($j) ?></option>
-                  <?php endforeach; ?>
-                </select>
-              </div>
-              <div class="col-md-4">
-                <label class="form-label small fw-bold">Klien / Pemilik <span class="text-danger">*</span></label>
-                <input type="text" name="klien" class="form-control" placeholder="Contoh: Bpk. Arya Pratama" required>
-              </div>
-              <div class="col-md-4">
-                <label class="form-label small fw-bold">Lokasi Proyek <span class="text-danger">*</span></label>
-                <input type="text" name="lokasi" class="form-control" placeholder="Contoh: Pasirmulya, Bogor Barat" required>
-              </div>
-              <div class="col-md-6">
-                <label class="form-label small fw-bold">Nilai RAB Disepakati (Rp) <span class="text-danger">*</span></label>
-                <div class="input-group">
-                  <span class="input-group-text bg-light fw-bold text-muted">Rp</span>
-                  <input type="number" step="0.01" min="1" name="nilai_rab" id="addNilaiRab" class="form-control mono-num fw-bold text-dark" placeholder="850000000" required>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <label class="form-label small fw-bold">Target Rencana Selesai <span class="text-danger">*</span></label>
-                <input type="date" name="tanggal_selesai_rencana" id="addTglRencana" class="form-control mono-num" required value="<?= date('Y-m-d', strtotime('+3 months')) ?>">
-              </div>
+              <div class="form-text small" style="font-size:0.75rem;">Realisasi fisik di lapangan saat penilaian.</div>
             </div>
-          </div>
 
-          <!-- BAGIAN 2: NILAI LAPANGAN (SAW) -->
-          <div>
-            <h6 class="fw-bold text-dark border-bottom pb-2 d-flex align-items-center gap-2">
-              <span class="badge bg-warning text-dark">2</span>
-              <span>Realisasi Lapangan & Kinerja</span>
-            </h6>
-            <div class="row g-3 mt-1">
-              <!-- C1: Progres Aktual -->
-              <div class="col-md-6">
-                <label class="form-label small fw-bold">C1: Progres Fisik Aktual (%) <span class="text-danger">*</span></label>
-                <div class="input-group">
-                  <input type="number" step="0.01" min="0" max="100" name="progres_aktual" class="form-control mono-num" placeholder="95.50" required>
-                  <span class="input-group-text">%</span>
-                </div>
-                <div class="form-text small" style="font-size:0.75rem;">Realisasi progres fisik di lapangan saat ini.</div>
+            <!-- C2: Biaya Realisasi -->
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">C2: Biaya Pengeluaran Realisasi (Rp) <span class="text-danger">*</span></label>
+              <div class="input-group">
+                <span class="input-group-text">Rp</span>
+                <input type="number" step="0.01" min="0" name="biaya_realisasi" class="form-control mono-num" placeholder="816000000" required>
               </div>
+              <div class="form-text small" style="font-size:0.75rem;">Total biaya pengeluaran riil aktual.</div>
+            </div>
 
-              <!-- C2: Biaya Realisasi -->
-              <div class="col-md-6">
-                <label class="form-label small fw-bold">C2: Biaya Pengeluaran Realisasi (Rp) <span class="text-danger">*</span></label>
-                <div class="input-group">
-                  <span class="input-group-text">Rp</span>
-                  <input type="number" step="0.01" min="0" name="biaya_realisasi" class="form-control mono-num" placeholder="816000000" required>
-                </div>
-                <div class="form-text small" style="font-size:0.75rem;">Total biaya yang sudah dikeluarkan kontraktor.</div>
-              </div>
+            <!-- C3: Foto Progres -->
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">C3: Dokumentasi Foto Progres Lapangan <span class="text-danger">*</span></label>
+              <select name="skor_foto_progres" class="form-select" required>
+                <option value="5" selected>Skor 5 - Sangat Lengkap (Rutin & Terarsip Rapih)</option>
+                <option value="4">Skor 4 - Lengkap (Pekerjaan Utama Rutin Ada)</option>
+                <option value="3">Skor 3 - Cukup (Hanya Zona Tertentu)</option>
+                <option value="2">Skor 2 - Kurang (Jarang Difoto)</option>
+                <option value="1">Skor 1 - Tidak Ada / Sangat Minim</option>
+              </select>
+            </div>
 
-              <!-- C3: Foto Progres -->
-              <div class="col-md-6">
-                <label class="form-label small fw-bold">C3: Dokumentasi Foto Progres Lapangan <span class="text-danger">*</span></label>
-                <select name="skor_foto_progres" class="form-select" required>
-                  <option value="5" selected>Skor 5 - Sangat Lengkap (Rutin & Terarsip Rapih)</option>
-                  <option value="4">Skor 4 - Lengkap (Pekerjaan Utama Rutin Ada)</option>
-                  <option value="3">Skor 3 - Cukup (Hanya Zona Tertentu)</option>
-                  <option value="2">Skor 2 - Kurang (Jarang Difoto)</option>
-                  <option value="1">Skor 1 - Tidak Ada / Sangat Minim</option>
-                </select>
-              </div>
+            <!-- C4: BAST -->
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">C4: Ketepatan Serah Terima / BAST <span class="text-danger">*</span></label>
+              <select name="skor_bast" class="form-select" required>
+                <option value="5" selected>Skor 5 - Sempurna (Tepat Waktu Tanpa Catatan)</option>
+                <option value="4">Skor 4 - Catatan Ringan</option>
+                <option value="3">Skor 3 - Terlambat Ringan</option>
+                <option value="2">Skor 2 - Ada Catatan Perbaikan</option>
+                <option value="1">Skor 1 - Belum Ada BAST</option>
+              </select>
+            </div>
 
-              <!-- C4: BAST -->
-              <div class="col-md-6">
-                <label class="form-label small fw-bold">C4: Ketepatan Serah Terima / BAST <span class="text-danger">*</span></label>
-                <select name="skor_bast" class="form-select" required>
-                  <option value="5" selected>Skor 5 - Sempurna (Tepat Waktu Tanpa Catatan)</option>
-                  <option value="4">Skor 4 - Catatan Ringan</option>
-                  <option value="3">Skor 3 - Terlambat Ringan</option>
-                  <option value="2">Skor 2 - Ada Catatan Perbaikan</option>
-                  <option value="1">Skor 1 - Belum Ada BAST</option>
-                </select>
-              </div>
-
-              <!-- C5: Keterlambatan Waktu -->
-              <div class="col-12">
-                <div class="p-3 bg-light rounded border">
-                  <div class="d-flex align-items-center justify-content-between mb-2">
-                    <label class="form-label small fw-bold mb-0">C5: Jadwal Selesai Aktual Lapangan <span class="text-danger">*</span></label>
-                    <div class="form-check form-switch m-0">
-                      <input class="form-check-input" type="checkbox" id="addChkOnTime" name="is_on_time" value="1" checked onchange="toggleAddOnTime(this)">
-                      <label class="form-check-label small fw-bold text-success" for="addChkOnTime">
-                        <i class="bi bi-check-circle-fill me-1"></i> Tepat Waktu (0 Hari Terlambat)
-                      </label>
+            <!-- C5: Keterlambatan Waktu -->
+            <div class="col-12">
+              <div class="p-3 bg-light rounded border">
+                <label class="form-label small fw-bold mb-1 text-dark">C5: Keterlambatan Waktu Penyelesaian <span class="text-danger">*</span></label>
+                <div class="row g-2 align-items-center">
+                  <div class="col-sm-6">
+                    <div class="input-group">
+                      <input type="number" min="0" name="hari_terlambat" id="addHariTerlambat" class="form-control mono-num fw-bold text-dark" value="0" placeholder="0" required oninput="syncAddDelay(this.value)">
+                      <span class="input-group-text bg-white">Hari Terlambat</span>
+                    </div>
+                    <div class="form-text small" style="font-size:0.75rem;">Ketik <strong>0</strong> jika selesai tepat waktu, atau isi jumlah hari keterlambatan.</div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="input-group input-group-sm">
+                      <span class="input-group-text bg-white small text-muted">Tanggal Selesai:</span>
+                      <input type="date" name="tanggal_selesai_aktual" id="addTglAktual" class="form-control mono-num" onchange="syncAddDate(this.value)">
                     </div>
                   </div>
-                  <input type="date" name="tanggal_selesai_aktual" id="addTglAktual" class="form-control form-control-sm mono-num" disabled>
-                  <div class="form-text small" style="font-size:0.75rem;">Hilangkan centang "Tepat Waktu" di atas jika proyek mengalami keterlambatan hari.</div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
 
-        <div class="modal-footer bg-light py-3 px-4">
-          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Batal</button>
-          <button type="submit" class="btn btn-navy px-4 fw-bold">
-            <i class="bi bi-save-fill me-1 text-warning"></i> Simpan & Hitung Peringkat
-          </button>
-        </div>
-      </form>
-    </div>
+      <div class="modal-footer bg-light py-3 px-4 border-top">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Batal</button>
+        <button type="submit" class="btn btn-navy px-4 fw-bold">
+          <i class="bi bi-save-fill me-1 text-warning"></i> Simpan & Hitung Peringkat
+        </button>
+      </div>
+    </form>
   </div>
 </div>
 
@@ -450,169 +454,185 @@
 <!-- ========================================== -->
 <div class="modal fade" id="modalEditProyek" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-    <div class="modal-content border-0 shadow">
-      <form action="<?= site_url('dashboard/simpan') ?>" method="post">
-        <?= csrf_field() ?>
-        <input type="hidden" name="periode_id" value="<?= $activePeriode['id'] ?>">
-        <input type="hidden" name="proyek_id" id="editProyekId">
+    <form action="<?= site_url('dashboard/simpan') ?>" method="post" class="modal-content border-0 shadow" style="max-height: 90vh;">
+      <?= csrf_field() ?>
+      <input type="hidden" name="periode_id" value="<?= $activePeriode['id'] ?>">
+      <input type="hidden" name="proyek_id" id="editProyekId">
 
-        <div class="modal-header bg-navy text-white py-3 px-4">
-          <div class="d-flex align-items-center gap-2">
-            <i class="bi bi-pencil-square text-warning fs-5"></i>
-            <div>
-              <h5 class="modal-title fw-bold text-white mb-0">Edit Data & Nilai Proyek</h5>
-              <small class="text-white-50">Perbarui data atau angka evaluasi lapangan proyek ini</small>
+      <div class="modal-header bg-navy text-white py-3 px-4" style="background-color: #0f172a !important;">
+        <div class="d-flex align-items-center gap-2">
+          <i class="bi bi-pencil-square text-warning fs-5"></i>
+          <div>
+            <h5 class="modal-title fw-bold text-white mb-0">Edit Data & Nilai Proyek</h5>
+            <small class="text-white-50">Perbarui data atau angka evaluasi lapangan proyek ini</small>
+          </div>
+        </div>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body p-4" style="overflow-y: auto; max-height: calc(88vh - 130px);">
+        <!-- BAGIAN 1: IDENTITAS PROYEK -->
+        <div class="mb-4">
+          <h6 class="fw-bold text-dark border-bottom pb-2 d-flex align-items-center gap-2">
+            <span class="badge bg-primary">1</span>
+            <span>Identitas & Anggaran Proyek</span>
+          </h6>
+          <div class="row g-3 mt-1">
+            <div class="col-md-8">
+              <label class="form-label small fw-bold">Nama Proyek <span class="text-danger">*</span></label>
+              <input type="text" name="nama" id="editNama" class="form-control" required>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label small fw-bold">Kode Proyek</label>
+              <input type="text" name="kode" id="editKode" class="form-control font-monospace" required>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label small fw-bold">Jenis Proyek <span class="text-danger">*</span></label>
+              <select name="jenis" id="editJenis" class="form-select" required>
+                <?php foreach ($jenisList as $j): ?>
+                  <option value="<?= $j ?>"><?= ucfirst($j) ?></option>
+                <?php endforeach; ?>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label small fw-bold">Klien / Pemilik <span class="text-danger">*</span></label>
+              <input type="text" name="klien" id="editKlien" class="form-control" required>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label small fw-bold">Lokasi Proyek <span class="text-danger">*</span></label>
+              <input type="text" name="lokasi" id="editLokasi" class="form-control" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">Nilai RAB Disepakati (Rp) <span class="text-danger">*</span></label>
+              <div class="input-group">
+                <span class="input-group-text bg-light fw-bold text-muted">Rp</span>
+                <input type="number" step="0.01" min="1" name="nilai_rab" id="editNilaiRab" class="form-control mono-num fw-bold text-dark" required>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">Target Rencana Selesai <span class="text-danger">*</span></label>
+              <input type="date" name="tanggal_selesai_rencana" id="editTglRencana" class="form-control mono-num" required onchange="syncEditDelay(document.getElementById('editHariTerlambat').value)">
             </div>
           </div>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
         </div>
 
-        <div class="modal-body p-4">
-          <!-- BAGIAN 1: IDENTITAS PROYEK -->
-          <div class="mb-4">
-            <h6 class="fw-bold text-dark border-bottom pb-2 d-flex align-items-center gap-2">
-              <span class="badge bg-primary">1</span>
-              <span>Identitas & Anggaran Proyek</span>
-            </h6>
-            <div class="row g-3 mt-1">
-              <div class="col-md-8">
-                <label class="form-label small fw-bold">Nama Proyek <span class="text-danger">*</span></label>
-                <input type="text" name="nama" id="editNama" class="form-control" required>
-              </div>
-              <div class="col-md-4">
-                <label class="form-label small fw-bold">Kode Proyek</label>
-                <input type="text" name="kode" id="editKode" class="form-control font-monospace" required>
-              </div>
-              <div class="col-md-4">
-                <label class="form-label small fw-bold">Jenis Proyek <span class="text-danger">*</span></label>
-                <select name="jenis" id="editJenis" class="form-select" required>
-                  <?php foreach ($jenisList as $j): ?>
-                    <option value="<?= $j ?>"><?= ucfirst($j) ?></option>
-                  <?php endforeach; ?>
-                </select>
-              </div>
-              <div class="col-md-4">
-                <label class="form-label small fw-bold">Klien / Pemilik <span class="text-danger">*</span></label>
-                <input type="text" name="klien" id="editKlien" class="form-control" required>
-              </div>
-              <div class="col-md-4">
-                <label class="form-label small fw-bold">Lokasi Proyek <span class="text-danger">*</span></label>
-                <input type="text" name="lokasi" id="editLokasi" class="form-control" required>
-              </div>
-              <div class="col-md-6">
-                <label class="form-label small fw-bold">Nilai RAB Disepakati (Rp) <span class="text-danger">*</span></label>
-                <div class="input-group">
-                  <span class="input-group-text bg-light fw-bold text-muted">Rp</span>
-                  <input type="number" step="0.01" min="1" name="nilai_rab" id="editNilaiRab" class="form-control mono-num fw-bold text-dark" required>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <label class="form-label small fw-bold">Target Rencana Selesai <span class="text-danger">*</span></label>
-                <input type="date" name="tanggal_selesai_rencana" id="editTglRencana" class="form-control mono-num" required>
+        <!-- BAGIAN 2: NILAI LAPANGAN (SAW C1 s/d C5) -->
+        <div>
+          <h6 class="fw-bold text-dark border-bottom pb-2 d-flex align-items-center gap-2">
+            <span class="badge bg-warning text-dark">2</span>
+            <span>Realisasi Lapangan & Kinerja (Kriteria C1 - C5)</span>
+          </h6>
+          <div class="row g-3 mt-1">
+            <!-- C1: Progres Aktual -->
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">C1: Progres Fisik Aktual (%) <span class="text-danger">*</span></label>
+              <div class="input-group">
+                <input type="number" step="0.01" min="0" max="100" name="progres_aktual" id="editProgresAktual" class="form-control mono-num" required>
+                <span class="input-group-text">%</span>
               </div>
             </div>
-          </div>
 
-          <!-- BAGIAN 2: NILAI LAPANGAN (SAW) -->
-          <div>
-            <h6 class="fw-bold text-dark border-bottom pb-2 d-flex align-items-center gap-2">
-              <span class="badge bg-warning text-dark">2</span>
-              <span>Realisasi Lapangan & Kinerja</span>
-            </h6>
-            <div class="row g-3 mt-1">
-              <!-- C1: Progres Aktual -->
-              <div class="col-md-6">
-                <label class="form-label small fw-bold">C1: Progres Fisik Aktual (%) <span class="text-danger">*</span></label>
-                <div class="input-group">
-                  <input type="number" step="0.01" min="0" max="100" name="progres_aktual" id="editProgresAktual" class="form-control mono-num" required>
-                  <span class="input-group-text">%</span>
-                </div>
+            <!-- C2: Biaya Realisasi -->
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">C2: Biaya Pengeluaran Realisasi (Rp) <span class="text-danger">*</span></label>
+              <div class="input-group">
+                <span class="input-group-text">Rp</span>
+                <input type="number" step="0.01" min="0" name="biaya_realisasi" id="editBiayaRealisasi" class="form-control mono-num" required>
               </div>
+            </div>
 
-              <!-- C2: Biaya Realisasi -->
-              <div class="col-md-6">
-                <label class="form-label small fw-bold">C2: Biaya Pengeluaran Realisasi (Rp) <span class="text-danger">*</span></label>
-                <div class="input-group">
-                  <span class="input-group-text">Rp</span>
-                  <input type="number" step="0.01" min="0" name="biaya_realisasi" id="editBiayaRealisasi" class="form-control mono-num" required>
-                </div>
-              </div>
+            <!-- C3: Foto Progres -->
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">C3: Dokumentasi Foto Progres Lapangan <span class="text-danger">*</span></label>
+              <select name="skor_foto_progres" id="editSkorFoto" class="form-select" required>
+                <option value="5">Skor 5 - Sangat Lengkap (Rutin & Terarsip Rapih)</option>
+                <option value="4">Skor 4 - Lengkap (Pekerjaan Utama Rutin Ada)</option>
+                <option value="3">Skor 3 - Cukup (Hanya Zona Tertentu)</option>
+                <option value="2">Skor 2 - Kurang (Jarang Difoto)</option>
+                <option value="1">Skor 1 - Tidak Ada / Sangat Minim</option>
+              </select>
+            </div>
 
-              <!-- C3: Foto Progres -->
-              <div class="col-md-6">
-                <label class="form-label small fw-bold">C3: Dokumentasi Foto Progres Lapangan <span class="text-danger">*</span></label>
-                <select name="skor_foto_progres" id="editSkorFoto" class="form-select" required>
-                  <option value="5">Skor 5 - Sangat Lengkap (Rutin & Terarsip Rapih)</option>
-                  <option value="4">Skor 4 - Lengkap (Pekerjaan Utama Rutin Ada)</option>
-                  <option value="3">Skor 3 - Cukup (Hanya Zona Tertentu)</option>
-                  <option value="2">Skor 2 - Kurang (Jarang Difoto)</option>
-                  <option value="1">Skor 1 - Tidak Ada / Sangat Minim</option>
-                </select>
-              </div>
+            <!-- C4: BAST -->
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">C4: Ketepatan Serah Terima / BAST <span class="text-danger">*</span></label>
+              <select name="skor_bast" id="editSkorBast" class="form-select" required>
+                <option value="5">Skor 5 - Sempurna (Tepat Waktu Tanpa Catatan)</option>
+                <option value="4">Skor 4 - Catatan Ringan</option>
+                <option value="3">Skor 3 - Terlambat Ringan</option>
+                <option value="2">Skor 2 - Ada Catatan Perbaikan</option>
+                <option value="1">Skor 1 - Belum Ada BAST</option>
+              </select>
+            </div>
 
-              <!-- C4: BAST -->
-              <div class="col-md-6">
-                <label class="form-label small fw-bold">C4: Ketepatan Serah Terima / BAST <span class="text-danger">*</span></label>
-                <select name="skor_bast" id="editSkorBast" class="form-select" required>
-                  <option value="5">Skor 5 - Sempurna (Tepat Waktu Tanpa Catatan)</option>
-                  <option value="4">Skor 4 - Catatan Ringan</option>
-                  <option value="3">Skor 3 - Terlambat Ringan</option>
-                  <option value="2">Skor 2 - Ada Catatan Perbaikan</option>
-                  <option value="1">Skor 1 - Belum Ada BAST</option>
-                </select>
-              </div>
-
-              <!-- C5: Keterlambatan Waktu -->
-              <div class="col-12">
-                <div class="p-3 bg-light rounded border">
-                  <div class="d-flex align-items-center justify-content-between mb-2">
-                    <label class="form-label small fw-bold mb-0">C5: Jadwal Selesai Aktual Lapangan <span class="text-danger">*</span></label>
-                    <div class="form-check form-switch m-0">
-                      <input class="form-check-input" type="checkbox" id="editChkOnTime" name="is_on_time" value="1" onchange="toggleEditOnTime(this)">
-                      <label class="form-check-label small fw-bold text-success" for="editChkOnTime">
-                        <i class="bi bi-check-circle-fill me-1"></i> Tepat Waktu (0 Hari Terlambat)
-                      </label>
+            <!-- C5: Keterlambatan Waktu -->
+            <div class="col-12">
+              <div class="p-3 bg-light rounded border">
+                <label class="form-label small fw-bold mb-1 text-dark">C5: Keterlambatan Waktu Penyelesaian <span class="text-danger">*</span></label>
+                <div class="row g-2 align-items-center">
+                  <div class="col-sm-6">
+                    <div class="input-group">
+                      <input type="number" min="0" name="hari_terlambat" id="editHariTerlambat" class="form-control mono-num fw-bold text-dark" value="0" placeholder="0" required oninput="syncEditDelay(this.value)">
+                      <span class="input-group-text bg-white">Hari Terlambat</span>
+                    </div>
+                    <div class="form-text small" style="font-size:0.75rem;">Ketik <strong>0</strong> jika tepat waktu, atau isi jumlah hari keterlambatan.</div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="input-group input-group-sm">
+                      <span class="input-group-text bg-white small text-muted">Tanggal Selesai:</span>
+                      <input type="date" name="tanggal_selesai_aktual" id="editTglAktual" class="form-control mono-num" onchange="syncEditDate(this.value)">
                     </div>
                   </div>
-                  <input type="date" name="tanggal_selesai_aktual" id="editTglAktual" class="form-control form-control-sm mono-num">
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
 
-        <div class="modal-footer bg-light py-3 px-4">
-          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Batal</button>
-          <button type="submit" class="btn btn-navy px-4 fw-bold">
-            <i class="bi bi-save-fill me-1 text-warning"></i> Perbarui & Hitung Ulang
-          </button>
-        </div>
-      </form>
-    </div>
+      <div class="modal-footer bg-light py-3 px-4 border-top">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Batal</button>
+        <button type="submit" class="btn btn-navy px-4 fw-bold">
+          <i class="bi bi-save-fill me-1 text-warning"></i> Perbarui & Hitung Ulang
+        </button>
+      </div>
+    </form>
   </div>
 </div>
 
 <script>
-function toggleAddOnTime(chk) {
-  const input = document.getElementById('addTglAktual');
+function syncAddDelay(days) {
   const tglRencana = document.getElementById('addTglRencana').value;
-  if (chk.checked) {
-    input.value = tglRencana;
-    input.disabled = true;
-  } else {
-    input.disabled = false;
-  }
+  if (!tglRencana) return;
+  const d = new Date(tglRencana);
+  d.setDate(d.getDate() + parseInt(days || 0));
+  document.getElementById('addTglAktual').value = d.toISOString().split('T')[0];
 }
 
-function toggleEditOnTime(chk) {
-  const input = document.getElementById('editTglAktual');
+function syncAddDate(val) {
+  const tglRencana = document.getElementById('addTglRencana').value;
+  if (!tglRencana || !val) return;
+  const dR = new Date(tglRencana);
+  const dA = new Date(val);
+  const diff = Math.max(0, Math.ceil((dA - dR) / (1000 * 60 * 60 * 24)));
+  document.getElementById('addHariTerlambat').value = diff;
+}
+
+function syncEditDelay(days) {
   const tglRencana = document.getElementById('editTglRencana').value;
-  if (chk.checked) {
-    input.value = tglRencana;
-    input.disabled = true;
-  } else {
-    input.disabled = false;
-  }
+  if (!tglRencana) return;
+  const d = new Date(tglRencana);
+  d.setDate(d.getDate() + parseInt(days || 0));
+  document.getElementById('editTglAktual').value = d.toISOString().split('T')[0];
+}
+
+function syncEditDate(val) {
+  const tglRencana = document.getElementById('editTglRencana').value;
+  if (!tglRencana || !val) return;
+  const dR = new Date(tglRencana);
+  const dA = new Date(val);
+  const diff = Math.max(0, Math.ceil((dA - dR) / (1000 * 60 * 60 * 24)));
+  document.getElementById('editHariTerlambat').value = diff;
 }
 
 function bukaModalEdit(data) {
@@ -629,21 +649,29 @@ function bukaModalEdit(data) {
   document.getElementById('editSkorFoto').value = data.skor_foto_progres || 5;
   document.getElementById('editSkorBast').value = data.skor_bast || 5;
 
-  const tglAktual = data.tanggal_selesai_aktual || data.tanggal_selesai_rencana || '';
+  const tglRencana = data.tanggal_selesai_rencana || '';
+  const tglAktual  = data.tanggal_selesai_aktual || tglRencana;
   document.getElementById('editTglAktual').value = tglAktual;
 
-  const chk = document.getElementById('editChkOnTime');
-  if (data.tanggal_selesai_rencana && tglAktual && tglAktual <= data.tanggal_selesai_rencana) {
-    chk.checked = true;
-    document.getElementById('editTglAktual').disabled = true;
-  } else {
-    chk.checked = false;
-    document.getElementById('editTglAktual').disabled = false;
+  let delay = 0;
+  if (tglRencana && tglAktual) {
+    const dR = new Date(tglRencana);
+    const dA = new Date(tglAktual);
+    delay = Math.max(0, Math.ceil((dA - dR) / (1000 * 60 * 60 * 24)));
   }
+  document.getElementById('editHariTerlambat').value = delay;
 
   const modal = new bootstrap.Modal(document.getElementById('modalEditProyek'));
   modal.show();
 }
+
+// Initial sync on load
+document.addEventListener('DOMContentLoaded', () => {
+  const addTgl = document.getElementById('addTglRencana');
+  if (addTgl && addTgl.value) {
+    syncAddDelay(0);
+  }
+});
 </script>
 
 <?= $this->endSection() ?>

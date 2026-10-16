@@ -231,7 +231,7 @@ class DashboardController extends BaseController
 
         $hasilList = $this->hasilSawModel->getHasilWithProyek($periodeId);
         if (empty($hasilList)) {
-            return redirect()->to(site_url('dashboard/' . $periodeId))->with('error', 'Belum ada data proyek pada periode ini.');
+            return redirect()->to(site_url('dashboard'))->with('error', 'Belum ada data proyek yang dinilai.');
         }
 
         $kriterias = $this->kriteriaModel->orderBy('kode', 'ASC')->findAll();
@@ -258,7 +258,7 @@ class DashboardController extends BaseController
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
 
-        $filename = 'Laporan_SPK_' . preg_replace('/[^A-Za-z0-9_-]/', '_', $periode['nama']) . '.pdf';
+        $filename = 'Laporan_Penilaian_Kinerja_Proyek_PT_Rancang_Bangun_Sedaya.pdf';
         $dompdf->stream($filename, ['Attachment' => false]);
         exit;
     }

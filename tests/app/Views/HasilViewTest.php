@@ -160,6 +160,9 @@ final class HasilViewTest extends CIUnitTestCase
         $this->assertStringContainsString('Villa Modern 2 Lantai', $html);
         $this->assertStringContainsString('modalTambahProyek', $html);
         $this->assertStringContainsString('modalEditProyek', $html);
+        $this->assertStringContainsString('Seluruh Proyek Aktif', $html);
+        $this->assertStringNotContainsString('Ganti Periode', $html);
+        $this->assertStringNotContainsString('Dalam Sesi Ini', $html);
     }
 }
 

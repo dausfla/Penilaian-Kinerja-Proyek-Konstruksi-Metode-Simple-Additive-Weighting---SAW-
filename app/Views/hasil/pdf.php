@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Laporan Hasil SPK - <?= esc($periode['nama']) ?></title>
+  <title>Laporan Penilaian Kinerja Proyek - PT Rancang Bangun Sedaya</title>
   <style>
     body {
       font-family: 'Helvetica', Arial, sans-serif;
@@ -151,21 +151,21 @@
 
   <!-- Judul Laporan -->
   <div class="doc-title">Laporan Penilaian & Perangkingan Kinerja Proyek</div>
-  <div class="doc-sub">Sesi Evaluasi Periode: <?= esc($periode['nama']) ?></div>
+  <div class="doc-sub">Portofolio Evaluasi Kinerja Seluruh Proyek Konstruksi</div>
 
-  <!-- Metadata Periode -->
+  <!-- Metadata Laporan -->
   <table class="meta-table">
     <tr>
-      <td style="width: 20%; font-weight: bold;">Tanggal Penilaian</td>
-      <td style="width: 30%;">: <?= date('d F Y', strtotime($periode['tanggal_penilaian'])) ?></td>
-      <td style="width: 20%; font-weight: bold;">Tanggal Cetak</td>
+      <td style="width: 20%; font-weight: bold;">Tanggal Dokumen</td>
       <td style="width: 30%;">: <?= $printDate ?></td>
+      <td style="width: 20%; font-weight: bold;">Dicetak Oleh</td>
+      <td style="width: 30%;">: <?= !empty($printedBy) && $printedBy !== 'Administrator' ? esc($printedBy) : 'Muhamad Firdaus' ?></td>
     </tr>
     <tr>
       <td style="font-weight: bold;">Jumlah Proyek</td>
-      <td>: <?= count($hasilList) ?> Proyek</td>
-      <td style="font-weight: bold;">Dicetak Oleh</td>
-      <td>: <?= !empty($printedBy) && $printedBy !== 'Administrator' ? esc($printedBy) : 'Muhamad Firdaus' ?></td>
+      <td>: <?= count($hasilList) ?> Proyek Dinilai</td>
+      <td style="font-weight: bold;">Status Evaluasi</td>
+      <td>: Terkalkulasi Otomatis (Metode SAW)</td>
     </tr>
     <tr>
       <td style="font-weight: bold;">Ambang Batas</td>

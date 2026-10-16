@@ -7,7 +7,7 @@
     <div>
       <div class="d-flex align-items-center gap-2 mb-2">
         <span class="badge bg-warning text-dark px-3 py-1 fw-bold">PT RANCANG BANGUN SEDAYA</span>
-        <span class="badge bg-dark-subtle text-light border border-secondary"><?= esc($activePeriode['nama']) ?></span>
+        <span class="badge bg-secondary text-light px-2 py-1 small">Portfolio Proyek</span>
       </div>
       <h3 class="fw-bold mb-1 text-white">Evaluasi & Peringkat Kinerja Proyek</h3>
       <p class="text-white-50 small mb-0">
@@ -31,28 +31,10 @@
 
       <!-- Tombol Cetak PDF -->
       <?php if (!empty($hasilList)): ?>
-        <a href="<?= site_url('dashboard/pdf/' . $activePeriode['id']) ?>" target="_blank" class="btn btn-danger btn-sm fw-semibold shadow-sm d-flex align-items-center gap-1 py-2">
+        <a href="<?= site_url('dashboard/pdf') ?>" target="_blank" class="btn btn-danger btn-sm fw-semibold shadow-sm d-flex align-items-center gap-1 py-2">
           <i class="bi bi-file-earmark-pdf-fill"></i>
           <span>Cetak Laporan PDF</span>
         </a>
-      <?php endif; ?>
-
-      <!-- Dropdown Ganti Periode jika ada lebih dari 1 -->
-      <?php if (count($allPeriodes) > 1): ?>
-        <div class="dropdown">
-          <button class="btn btn-sm btn-outline-secondary dropdown-toggle py-2 text-white border-secondary" type="button" data-bs-toggle="dropdown">
-            <i class="bi bi-calendar3 me-1"></i> Ganti Periode
-          </button>
-          <ul class="dropdown-menu dropdown-menu-end shadow-sm">
-            <?php foreach ($allPeriodes as $p): ?>
-              <li>
-                <a class="dropdown-item small d-flex justify-content-between align-items-center <?= ($p['id'] == $activePeriode['id']) ? 'active' : '' ?>" href="<?= site_url('dashboard/' . $p['id']) ?>">
-                  <span><?= esc($p['nama']) ?></span>
-                </a>
-              </li>
-            <?php endforeach; ?>
-          </ul>
-        </div>
       <?php endif; ?>
     </div>
   </div>
@@ -66,7 +48,7 @@
         <div>
           <div class="stat-label">Total Proyek Dinilai</div>
           <div class="stat-value"><?= count($hasilList) ?></div>
-          <div class="text-muted small mt-1">Dalam Sesi Ini</div>
+          <div class="text-muted small mt-1">Seluruh Proyek Aktif</div>
         </div>
         <div class="stat-icon stat-icon-primary">
           <i class="bi bi-buildings"></i>
@@ -304,7 +286,6 @@
   <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
     <form action="<?= site_url('dashboard/simpan') ?>" method="post" class="modal-content border-0 shadow" style="max-height: 90vh;">
       <?= csrf_field() ?>
-      <input type="hidden" name="periode_id" value="<?= $activePeriode['id'] ?>">
 
       <div class="modal-header bg-navy text-white py-3 px-4" style="background-color: #0f172a !important;">
         <div class="d-flex align-items-center gap-2">
@@ -456,7 +437,6 @@
   <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
     <form action="<?= site_url('dashboard/simpan') ?>" method="post" class="modal-content border-0 shadow" style="max-height: 90vh;">
       <?= csrf_field() ?>
-      <input type="hidden" name="periode_id" value="<?= $activePeriode['id'] ?>">
       <input type="hidden" name="proyek_id" id="editProyekId">
 
       <div class="modal-header bg-navy text-white py-3 px-4" style="background-color: #0f172a !important;">

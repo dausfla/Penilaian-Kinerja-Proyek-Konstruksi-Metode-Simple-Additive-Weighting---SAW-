@@ -32,47 +32,19 @@
     <div class="sidebar-nav-container">
       <div class="nav-section-title">Menu Utama</div>
       
-      <a href="<?= site_url('dashboard') ?>" class="nav-item-link <?= (url_is('dashboard') || url_is('')) ? 'active' : '' ?>">
-        <i class="bi bi-speedometer2"></i>
-        <span>Dashboard</span>
+      <a href="<?= site_url('dashboard') ?>" class="nav-item-link <?= (url_is('dashboard') || url_is('hasil*') || url_is('')) ? 'active' : '' ?>">
+        <i class="bi bi-trophy-fill text-warning"></i>
+        <span>Evaluasi & Peringkat</span>
       </a>
 
-      <div class="nav-section-title mt-2">Master Data</div>
-      
       <a href="<?= site_url('proyek') ?>" class="nav-item-link <?= url_is('proyek*') ? 'active' : '' ?>">
         <i class="bi bi-buildings"></i>
         <span>Data Proyek</span>
       </a>
 
-      <a href="<?= site_url('kriteria') ?>" class="nav-item-link <?= url_is('kriteria*') ? 'active' : '' ?>">
+      <a href="<?= site_url('pengaturan') ?>" class="nav-item-link <?= (url_is('pengaturan*') || url_is('kriteria*')) ? 'active' : '' ?>">
         <i class="bi bi-sliders"></i>
-        <span>Kriteria & Bobot</span>
-      </a>
-
-      <div class="nav-section-title mt-2">Proses Penilaian</div>
-
-      <a href="<?= site_url('periode') ?>" class="nav-item-link <?= (url_is('periode*') || url_is('penilaian*')) ? 'active' : '' ?>">
-        <i class="bi bi-calendar-check"></i>
-        <span>Periode Penilaian</span>
-      </a>
-
-      <div class="nav-section-title mt-2">Laporan & Analisis</div>
-
-      <a href="<?= site_url('hasil') ?>" class="nav-item-link <?= url_is('hasil*') ? 'active' : '' ?>">
-        <i class="bi bi-trophy"></i>
-        <span>Hasil & Peringkat</span>
-      </a>
-
-      <a href="<?= site_url('riwayat') ?>" class="nav-item-link <?= url_is('riwayat*') ? 'active' : '' ?>">
-        <i class="bi bi-clock-history"></i>
-        <span>Riwayat Komparasi</span>
-      </a>
-
-      <div class="nav-section-title mt-2">Sistem</div>
-
-      <a href="<?= site_url('users') ?>" class="nav-item-link <?= url_is('users*') ? 'active' : '' ?>">
-        <i class="bi bi-people"></i>
-        <span>Manajemen Pengguna</span>
+        <span>Pengaturan & Bobot</span>
       </a>
     </div>
 

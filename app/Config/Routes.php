@@ -15,11 +15,19 @@ $routes->get('logout', 'AuthController::logout');
 // Protected Routes (Semua yang login sebagai Administrator)
 $routes->group('', ['filter' => 'auth'], static function ($routes) {
     $routes->get('dashboard', 'DashboardController::index');
+    $routes->get('dashboard/(:num)', 'DashboardController::index/$1');
+    $routes->post('dashboard/simpan', 'DashboardController::simpanProyekDanNilai');
+    $routes->get('dashboard/hitung', 'DashboardController::hitungUlang');
+    $routes->get('dashboard/hapus/(:num)', 'DashboardController::hapusProyek/$1');
+    $routes->get('dashboard/pdf', 'DashboardController::pdf');
+    $routes->get('dashboard/pdf/(:num)', 'DashboardController::pdf/$1');
+
+    $routes->get('pengaturan', 'KriteriaController::index');
     $routes->get('proyek', 'ProyekController::index');
     $routes->get('periode', 'PeriodeController::index');
-    $routes->get('hasil', 'HasilController::index');
-    $routes->get('hasil/(:num)', 'HasilController::index/$1');
-    $routes->get('hasil/pdf/(:num)', 'HasilController::pdf/$1');
+    $routes->get('hasil', 'DashboardController::index');
+    $routes->get('hasil/(:num)', 'DashboardController::index/$1');
+    $routes->get('hasil/pdf/(:num)', 'DashboardController::pdf/$1');
     $routes->get('riwayat', 'RiwayatController::index');
 });
 

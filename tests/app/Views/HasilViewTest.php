@@ -100,4 +100,64 @@ final class HasilViewTest extends CIUnitTestCase
         $this->assertStringContainsString('Administrator SPK', $html);
         $this->assertStringNotContainsString('Jl. Konstruksi Raya No. 88, Jakarta Selatan', $html);
     }
+
+    public function testDashboardViewRendersAllInOneFeatures(): void
+    {
+        $data = [
+            'title'          => 'Evaluasi & Peringkat Proyek',
+            'page_title'     => 'Evaluasi & Peringkat Proyek',
+            'allPeriodes'    => [
+                ['id' => 1, 'nama' => 'Periode 2026', 'status' => 'terhitung', 'tanggal_penilaian' => '2026-07-31'],
+            ],
+            'activePeriode'  => [
+                'id'                => 1,
+                'nama'              => 'Periode 2026',
+                'status'            => 'terhitung',
+                'tanggal_penilaian' => '2026-07-31',
+            ],
+            'hasilList'      => [
+                [
+                    'proyek_id'   => 1,
+                    'peringkat'   => 1,
+                    'proyek_kode' => 'PRJ-BOGOR-01',
+                    'proyek_nama' => 'Villa Modern 2 Lantai',
+                    'jenis'       => 'rumah',
+                    'klien'       => 'Bpk. Arya',
+                    'lokasi'      => 'Pasirmulya, Bogor',
+                    'nilai_rab'   => 850000000,
+                    'tanggal_selesai_rencana' => '2026-11-30',
+                    'vi'          => 0.9820,
+                    'kategori'    => 'Baik',
+                    'c1'          => 98.5,
+                    'c2'          => 96.0,
+                    'c3'          => 5,
+                    'c4'          => 5,
+                    'c5'          => 0,
+                    'raw'         => [
+                        'progres_aktual'         => 98.5,
+                        'biaya_realisasi'        => 816000000,
+                        'skor_foto_progres'      => 5,
+                        'skor_bast'              => 5,
+                        'tanggal_selesai_aktual' => '2026-11-30',
+                    ],
+                ],
+            ],
+            'kategoriCount'  => ['Baik' => 1, 'Perlu Perhatian' => 0, 'Berisiko/Terlambat' => 0],
+            'allProyeks'     => [],
+            'settings'       => ['batas_baik' => '0.80', 'batas_perhatian' => '0.60'],
+            'batasBaik'      => 0.80,
+            'batasPerhatian' => 0.60,
+            'jenisList'      => ['rumah', 'gedung', 'kantor', 'kost'],
+        ];
+
+        $html = view('dashboard/index', $data);
+
+        // All-in-one features exist
+        $this->assertStringContainsString('Tambah & Nilai Proyek', $html);
+        $this->assertStringContainsString('Peringkat & Kategori Kinerja Proyek', $html);
+        $this->assertStringContainsString('Villa Modern 2 Lantai', $html);
+        $this->assertStringContainsString('modalTambahProyek', $html);
+        $this->assertStringContainsString('modalEditProyek', $html);
+    }
 }
+

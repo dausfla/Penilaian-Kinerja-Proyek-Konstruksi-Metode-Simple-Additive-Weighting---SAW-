@@ -155,6 +155,8 @@ final class HasilViewTest extends CIUnitTestCase
         // All-in-one features exist
         $this->assertStringContainsString('Tambah & Nilai Proyek', $html);
         $this->assertStringContainsString('Peringkat & Kategori Kinerja Proyek', $html);
+        $this->assertStringContainsString('Skor Kinerja', $html);
+        $this->assertStringNotContainsString('$V_i$', $html);
         $this->assertStringContainsString('Villa Modern 2 Lantai', $html);
         $this->assertStringContainsString('modalTambahProyek', $html);
         $this->assertStringContainsString('modalEditProyek', $html);

@@ -173,7 +173,7 @@
   <div class="col-lg-4">
     <div class="preview-kriteria-box sticky-top" style="top: 85px;">
       <div class="d-flex align-items-center justify-content-between mb-3 border-bottom pb-2 border-secondary">
-        <h6 class="fw-bold mb-0 text-white"><i class="bi bi-lightning-charge-fill text-warning me-2"></i>Pratinjau Nilai ($X_{ij}$)</h6>
+        <h6 class="fw-bold mb-0 text-white"><i class="bi bi-lightning-charge-fill text-warning me-2"></i>Pratinjau Nilai Kriteria Proyek</h6>
         <span class="badge bg-warning text-dark font-monospace fw-bold">LIVE PREVIEW</span>
       </div>
 

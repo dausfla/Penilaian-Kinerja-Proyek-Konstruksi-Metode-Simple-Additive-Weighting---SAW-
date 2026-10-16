@@ -156,7 +156,7 @@
               <th>Jenis</th>
               <th>Klien & Lokasi</th>
               <th class="text-end">Nilai RAB (Rp)</th>
-              <th class="text-center">Skor Kinerja ($V_i$)</th>
+              <th class="text-center">Skor Kinerja</th>
               <th class="text-center">Kategori Kinerja</th>
               <th class="text-center" style="width: 130px;">Aksi</th>
             </tr>

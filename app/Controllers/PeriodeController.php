@@ -220,6 +220,8 @@ class PeriodeController extends BaseController
                 'c3'          => $item['c3'],
                 'c4'          => $item['c4'],
                 'c5'          => $item['c5'],
+                'c6'          => $item['c6'],
+                'c7'          => $item['c7'],
                 'vi'          => $item['vi'],
                 'peringkat'   => $item['peringkat'],
                 'kategori'    => $item['kategori'],

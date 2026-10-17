@@ -44,12 +44,20 @@ class SawService
             $rawItem['tanggal_selesai_aktual'] ?? ''
         );
 
+        // C6: Tingkat Kepuasan Klien (Benefit) = Skor 1 s.d. 5
+        $c6 = (float)($rawItem['skor_kepuasan_klien'] ?? 5);
+
+        // C7: Penerapan K3 & Keselamatan Kerja (Benefit) = Skor 1 s.d. 5
+        $c7 = (float)($rawItem['skor_k3'] ?? 5);
+
         return [
             'C1' => round($c1, 4),
             'C2' => round($c2, 4),
             'C3' => round($c3, 4),
             'C4' => round($c4, 4),
             'C5' => round($c5, 4),
+            'C6' => round($c6, 4),
+            'C7' => round($c7, 4),
         ];
     }
 
@@ -256,6 +264,8 @@ class SawService
                 'c3'       => $matrixX[$altId]['C3'] ?? 0,
                 'c4'       => $matrixX[$altId]['C4'] ?? 0,
                 'c5'       => $matrixX[$altId]['C5'] ?? 0,
+                'c6'       => $matrixX[$altId]['C6'] ?? 0,
+                'c7'       => $matrixX[$altId]['C7'] ?? 0,
                 'matrix_r' => $matrixR[$altId],
                 'matrix_w' => $matrixW[$altId],
                 'vi'       => $viRounded,

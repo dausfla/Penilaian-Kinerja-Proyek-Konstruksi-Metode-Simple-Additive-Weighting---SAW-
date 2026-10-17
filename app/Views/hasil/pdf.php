@@ -177,18 +177,20 @@
   <table class="data-table">
     <thead>
       <tr>
-        <th style="width: 25px;">No</th>
-        <th style="width: 45px;">Kode</th>
+        <th style="width: 20px;">No</th>
+        <th style="width: 40px;">Kode</th>
         <th>Nama Proyek</th>
-        <th style="width: 60px;">Jenis</th>
-        <th style="width: 75px;" class="text-right">RAB (Rp)</th>
-        <th style="width: 35px;">C1 (%)</th>
-        <th style="width: 35px;">C2 (%)</th>
-        <th style="width: 25px;">C3</th>
-        <th style="width: 25px;">C4</th>
-        <th style="width: 30px;">C5 (hr)</th>
-        <th style="width: 50px;">Skor Akhir</th>
-        <th style="width: 80px;">Kategori</th>
+        <th style="width: 50px;">Jenis</th>
+        <th style="width: 70px;" class="text-right">RAB (Rp)</th>
+        <th style="width: 32px;">C1 (%)</th>
+        <th style="width: 32px;">C2 (%)</th>
+        <th style="width: 20px;">C3</th>
+        <th style="width: 20px;">C4</th>
+        <th style="width: 25px;">C5 (hr)</th>
+        <th style="width: 20px;">C6</th>
+        <th style="width: 20px;">C7</th>
+        <th style="width: 45px;">Skor Akhir</th>
+        <th style="width: 75px;">Kategori</th>
       </tr>
     </thead>
     <tbody>
@@ -204,6 +206,8 @@
           <td class="text-center"><?= $h['c3'] ?></td>
           <td class="text-center"><?= $h['c4'] ?></td>
           <td class="text-center"><?= $h['c5'] ?></td>
+          <td class="text-center"><?= (int)($h['c6'] ?? 5) ?></td>
+          <td class="text-center"><?= (int)($h['c7'] ?? 5) ?></td>
           <td class="text-center fw-bold" style="font-size: 11px;"><?= number_format((float)$h['vi'], 2) ?></td>
           <td class="text-center">
             <?php if ($h['kategori'] === 'Baik'): ?>

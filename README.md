@@ -33,21 +33,23 @@ Aplikasi berbasis web resmi untuk mengevaluasi, membandingkan, serta merangking 
    - Menu **Data Proyek** (`/proyek`) untuk mengelola inventaris proyek.
    - Menu **Pengaturan & Bobot** (`/pengaturan`) untuk menyesuaikan bobot kriteria (total 100%) dan ambang batas kategori.
 6. **Ekspor Laporan PDF Resmi Standar A4**:
-   - Dokumen siap cetak terintegrasi Dompdf lengkap dengan kop surat PT Rancang Bangun Sedaya, alamat Pasirmulya Bogor, ringkasan skor C1–C5, dan pengesahan oleh Muhamad Firdaus.
+   - Dokumen siap cetak terintegrasi Dompdf lengkap dengan kop surat PT Rancang Bangun Sedaya, alamat Pasirmulya Bogor, ringkasan skor C1–C7, dan pengesahan oleh Muhamad Firdaus.
 
 ---
 
-## 📊 Struktur 5 Kriteria Penilaian
+## 📊 Struktur 7 Kriteria Penilaian
 
 Total pembobotan seluruh kriteria wajib tepat **100% (1,00)**:
 
 | Kode | Kriteria Penilaian | Sifat / Atribut | Bobot | Parameter Input |
 | :---: | :--- | :---: | :---: | :--- |
-| **C1** | **Capaian Progres Kurva S** | *Benefit* | **30% (0,30)** | Progres Fisik Aktual (%) vs Rencana |
-| **C2** | **Realisasi Biaya terhadap RAB** | *Cost* | **25% (0,25)** | Biaya Pengeluaran Realisasi (Rp) vs RAB |
-| **C3** | **Dokumentasi Foto Progres Lapangan** | *Benefit* | **20% (0,20)** | Kerapihan & Kelengkapan Arsip Foto (**Skor 1 – 5**) |
+| **C1** | **Capaian Progres Kurva S** | *Benefit* | **20% (0,20)** | Progres Fisik Aktual (%) vs Rencana |
+| **C2** | **Realisasi Biaya terhadap RAB** | *Cost* | **20% (0,20)** | Biaya Pengeluaran Realisasi (Rp) vs RAB |
+| **C3** | **Dokumentasi Foto Progres Lapangan** | *Benefit* | **15% (0,15)** | Kerapihan & Kelengkapan Arsip Foto (**Skor 1 – 5**) |
 | **C4** | **Ketepatan & Kualitas BAST** | *Benefit* | **15% (0,15)** | Kualitas Berita Acara Serah Terima (**Skor 1 – 5**) |
 | **C5** | **Keterlambatan Waktu Penyelesaian** | *Cost* | **10% (0,10)** | Selisih Hari Kalender (**0 Hari jika tepat waktu**) |
+| **C6** | **Tingkat Kepuasan Klien / Owner** | *Benefit* | **10% (0,10)** | Rating Kepuasan Pelanggan / Owner (**Skor 1 – 5**) |
+| **C7** | **Penerapan K3 & Keselamatan Kerja** | *Benefit* | **10% (0,10)** | Kepatuhan SMKK & Zero Accident (**Skor 1 – 5**) |
 
 ### Ambang Batas Kategori Kinerja:
 - **Baik**: Skor Akhir $\ge 0{,}80$
@@ -117,7 +119,7 @@ Jalankan rangkaian pengujian PHPUnit:
 ```bash
 ./vendor/bin/phpunit --testdox
 ```
-*Hasil uji: 16/16 tes lulus (65 assertions).*
+*Hasil uji: 17/17 tes lulus (77 assertions).*
 
 ---
 

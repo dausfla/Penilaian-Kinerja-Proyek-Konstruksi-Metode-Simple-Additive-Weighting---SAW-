@@ -612,7 +612,7 @@
             <a class="nav-link nav-link-custom" href="<?= site_url('/') ?>">Beranda</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link nav-link-custom" href="#kriteria">5 Kriteria</a>
+            <a class="nav-link nav-link-custom" href="#kriteria">7 Kriteria</a>
           </li>
           <li class="nav-item">
             <a class="nav-link nav-link-custom" href="#kategori">Kategori Kinerja</a>
@@ -713,27 +713,27 @@
     </div>
   </section>
 
-  <!-- 5 Kriteria Section -->
+  <!-- 7 Kriteria Section -->
   <section class="py-5" id="kriteria">
     <div class="container py-4">
       <div class="text-center mb-5">
         <div class="section-badge">
           <i class="bi bi-clipboard2-check-fill me-1"></i> Standar Evaluasi Objektif
         </div>
-        <h2 class="section-title">5 Kriteria Penilaian Kinerja Proyek</h2>
+        <h2 class="section-title">7 Kriteria Penilaian Kinerja Proyek</h2>
         <p class="section-desc">
-          Evaluasi berpedoman pada data kuantitatif jadwal, efisiensi anggaran, dan bukti fisik mutu di lapangan dengan total pembobotan tepat 100%.
+          Evaluasi berpedoman pada data kuantitatif jadwal, efisiensi anggaran, mutu visual, kepuasan klien, dan keselamatan kerja (K3) dengan total pembobotan tepat 100%.
         </p>
       </div>
 
-      <!-- Row 1: 3 Kriteria Utama (C1, C2, C3) -->
+      <!-- Row 1: C1, C2, C3 -->
       <div class="row g-4 mb-4">
         <!-- C1 -->
         <div class="col-lg-4 col-md-6">
           <div class="criteria-card card-benefit">
             <div class="criteria-header">
               <span class="criteria-code-badge"><i class="bi bi-graph-up-arrow"></i> C1</span>
-              <span class="criteria-weight-badge">Bobot: 30%</span>
+              <span class="criteria-weight-badge">Bobot: 20%</span>
             </div>
             <h3 class="criteria-title">Capaian Progres Kurva S</h3>
             <div>
@@ -756,7 +756,7 @@
           <div class="criteria-card card-cost">
             <div class="criteria-header">
               <span class="criteria-code-badge"><i class="bi bi-cash-stack"></i> C2</span>
-              <span class="criteria-weight-badge">Bobot: 25%</span>
+              <span class="criteria-weight-badge">Bobot: 20%</span>
             </div>
             <h3 class="criteria-title">Realisasi Biaya terhadap RAB</h3>
             <div>
@@ -779,7 +779,7 @@
           <div class="criteria-card card-benefit">
             <div class="criteria-header">
               <span class="criteria-code-badge"><i class="bi bi-camera-fill"></i> C3</span>
-              <span class="criteria-weight-badge">Bobot: 20%</span>
+              <span class="criteria-weight-badge">Bobot: 15%</span>
             </div>
             <h3 class="criteria-title">Dokumentasi Foto Progres Lapangan</h3>
             <div>
@@ -798,10 +798,10 @@
         </div>
       </div>
 
-      <!-- Row 2: 2 Kriteria Tambahan Berimbang di Tengah (C4, C5) -->
-      <div class="row g-4 justify-content-center">
+      <!-- Row 2: C4, C5 -->
+      <div class="row g-4 mb-4">
         <!-- C4 -->
-        <div class="col-lg-5 col-md-6">
+        <div class="col-lg-6 col-md-6">
           <div class="criteria-card card-benefit">
             <div class="criteria-header">
               <span class="criteria-code-badge"><i class="bi bi-file-earmark-check-fill"></i> C4</span>
@@ -824,7 +824,7 @@
         </div>
 
         <!-- C5 -->
-        <div class="col-lg-5 col-md-6">
+        <div class="col-lg-6 col-md-6">
           <div class="criteria-card card-cost">
             <div class="criteria-header">
               <span class="criteria-code-badge"><i class="bi bi-clock-history"></i> C5</span>
@@ -841,7 +841,56 @@
             </p>
             <div class="criteria-formula-box">
               <i class="bi bi-hourglass-split text-muted"></i>
-              <span>Rumus: <strong>max(0, BAST Aktual - Rencana) Hari</strong></span>
+              <span>Rumus: <strong>max(0, Selesai Aktual - Rencana) Hari</strong></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 3: C6, C7 -->
+      <div class="row g-4">
+        <!-- C6 -->
+        <div class="col-lg-6 col-md-6">
+          <div class="criteria-card card-benefit">
+            <div class="criteria-header">
+              <span class="criteria-code-badge"><i class="bi bi-star-fill text-warning"></i> C6</span>
+              <span class="criteria-weight-badge">Bobot: 10%</span>
+            </div>
+            <h3 class="criteria-title">Tingkat Kepuasan Klien / Owner</h3>
+            <div>
+              <span class="criteria-type-badge type-benefit">
+                <i class="bi bi-arrow-up-circle-fill"></i> Jenis: Keuntungan (Benefit)
+              </span>
+            </div>
+            <p class="criteria-text">
+              Evaluasi kepuasan pemilik proyek terhadap kualitas hasil fisik bangunan, kerapihan pengerjaan, dan pelayanan komunikasi kontraktor.
+            </p>
+            <div class="criteria-formula-box">
+              <i class="bi bi-emoji-smile text-muted"></i>
+              <span>Standar: <strong>Rating Kepuasan Klien (Skor 1 - 5)</strong></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- C7 -->
+        <div class="col-lg-6 col-md-6">
+          <div class="criteria-card card-benefit">
+            <div class="criteria-header">
+              <span class="criteria-code-badge"><i class="bi bi-shield-fill-check text-success"></i> C7</span>
+              <span class="criteria-weight-badge">Bobot: 10%</span>
+            </div>
+            <h3 class="criteria-title">Penerapan K3 & Keselamatan Kerja</h3>
+            <div>
+              <span class="criteria-type-badge type-benefit">
+                <i class="bi bi-arrow-up-circle-fill"></i> Jenis: Keuntungan (Benefit)
+              </span>
+            </div>
+            <p class="criteria-text">
+              Kepatuhan terhadap Sistem Manajemen Keselamatan Konstruksi (SMKK): pencapaian Zero Accident, kedisiplinan pemakaian APD, dan keamanan area tapak proyek.
+            </p>
+            <div class="criteria-formula-box">
+              <i class="bi bi-shield-check text-muted"></i>
+              <span>Standar: <strong>Rubrik Kepatuhan K3 & HSE (Skor 1 - 5)</strong></span>
             </div>
           </div>
         </div>
@@ -1006,7 +1055,7 @@
           <div class="d-flex flex-wrap justify-content-center justify-content-lg-end align-items-center gap-1 mb-2">
             <a href="<?= site_url('/') ?>" class="footer-link">Beranda</a>
             <span class="footer-bullet">&bull;</span>
-            <a href="#kriteria" class="footer-link">5 Kriteria Evaluasi</a>
+            <a href="#kriteria" class="footer-link">7 Kriteria Evaluasi</a>
             <span class="footer-bullet">&bull;</span>
             <a href="#kategori" class="footer-link">Kategori Kinerja</a>
             <span class="footer-bullet">&bull;</span>

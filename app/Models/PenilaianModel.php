@@ -19,6 +19,8 @@ class PenilaianModel extends Model
         'skor_foto_progres',
         'skor_bast',
         'tanggal_selesai_aktual',
+        'skor_kepuasan_klien',
+        'skor_k3',
     ];
     protected $useTimestamps    = false;
 

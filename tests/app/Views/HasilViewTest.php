@@ -77,6 +77,8 @@ final class HasilViewTest extends CIUnitTestCase
                     'c3'          => 5,
                     'c4'          => 4,
                     'c5'          => 5,
+                    'c6'          => 5,
+                    'c7'          => 5,
                     'vi'          => 0.95,
                     'kategori'    => 'Baik',
                 ],
@@ -133,11 +135,15 @@ final class HasilViewTest extends CIUnitTestCase
                     'c3'          => 5,
                     'c4'          => 5,
                     'c5'          => 0,
+                    'c6'          => 5,
+                    'c7'          => 5,
                     'raw'         => [
                         'progres_aktual'         => 98.5,
                         'biaya_realisasi'        => 816000000,
                         'skor_foto_progres'      => 5,
                         'skor_bast'              => 5,
+                        'skor_kepuasan_klien'    => 5,
+                        'skor_k3'                => 5,
                         'tanggal_selesai_aktual' => '2026-11-30',
                     ],
                 ],
@@ -160,6 +166,8 @@ final class HasilViewTest extends CIUnitTestCase
         $this->assertStringContainsString('Villa Modern 2 Lantai', $html);
         $this->assertStringContainsString('modalTambahProyek', $html);
         $this->assertStringContainsString('modalEditProyek', $html);
+        $this->assertStringContainsString('C6: Tingkat Kepuasan Klien', $html);
+        $this->assertStringContainsString('C7: Penerapan K3', $html);
         $this->assertStringContainsString('Seluruh Proyek Aktif', $html);
         $this->assertStringNotContainsString('Ganti Periode', $html);
         $this->assertStringNotContainsString('Dalam Sesi Ini', $html);

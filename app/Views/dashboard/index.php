@@ -223,6 +223,8 @@
                         'biaya_realisasi'        => (float)($h['raw']['biaya_realisasi'] ?? ($h['nilai_rab'] * $h['c2'] / 100)),
                         'skor_foto_progres'      => (int)($h['raw']['skor_foto_progres'] ?? $h['c3']),
                         'skor_bast'              => (int)($h['raw']['skor_bast'] ?? $h['c4']),
+                        'skor_kepuasan_klien'    => (int)($h['raw']['skor_kepuasan_klien'] ?? $h['c6'] ?? 5),
+                        'skor_k3'                => (int)($h['raw']['skor_k3'] ?? $h['c7'] ?? 5),
                         'tanggal_selesai_aktual' => $h['raw']['tanggal_selesai_aktual'] ?? $h['tanggal_selesai_rencana'],
                       ], JSON_HEX_APOS | JSON_HEX_QUOT) ?>)'>
                       <i class="bi bi-pencil-square me-1"></i> Edit
@@ -416,6 +418,30 @@
                 </div>
               </div>
             </div>
+
+            <!-- C6: Kepuasan Klien -->
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">C6: Tingkat Kepuasan Klien / Owner <span class="text-danger">*</span></label>
+              <select name="skor_kepuasan_klien" class="form-select" required>
+                <option value="5" selected>Skor 5 - Sangat Puas (Puas Tanpa Catatan / Komplain)</option>
+                <option value="4">Skor 4 - Puas (Ada Masukan / Catatan Minor)</option>
+                <option value="3">Skor 3 - Cukup Puas</option>
+                <option value="2">Skor 2 - Kurang Puas (Ada Keluhan Signifikan)</option>
+                <option value="1">Skor 1 - Tidak Puas / Sangat Kecewa</option>
+              </select>
+            </div>
+
+            <!-- C7: Penerapan K3 -->
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">C7: Penerapan K3 & Keselamatan Kerja <span class="text-danger">*</span></label>
+              <select name="skor_k3" class="form-select" required>
+                <option value="5" selected>Skor 5 - Sangat Baik (Zero Accident + APD 100% Tertib)</option>
+                <option value="4">Skor 4 - Baik (Zero Accident + Teguran Lisan Ringan)</option>
+                <option value="3">Skor 3 - Cukup (Disiplin APD Sedang)</option>
+                <option value="2">Skor 2 - Kurang (Ada Cedera Ringan / APD Jarang Dipakai)</option>
+                <option value="1">Skor 1 - Buruk (Insiden Berat / K3 Diabaikan)</option>
+              </select>
+            </div>
           </div>
         </div>
       </div>
@@ -566,6 +592,30 @@
                 </div>
               </div>
             </div>
+
+            <!-- C6: Kepuasan Klien -->
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">C6: Tingkat Kepuasan Klien / Owner <span class="text-danger">*</span></label>
+              <select name="skor_kepuasan_klien" id="editSkorKepuasan" class="form-select" required>
+                <option value="5">Skor 5 - Sangat Puas (Puas Tanpa Catatan / Komplain)</option>
+                <option value="4">Skor 4 - Puas (Ada Masukan / Catatan Minor)</option>
+                <option value="3">Skor 3 - Cukup Puas</option>
+                <option value="2">Skor 2 - Kurang Puas (Ada Keluhan Signifikan)</option>
+                <option value="1">Skor 1 - Tidak Puas / Sangat Kecewa</option>
+              </select>
+            </div>
+
+            <!-- C7: Penerapan K3 -->
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">C7: Penerapan K3 & Keselamatan Kerja <span class="text-danger">*</span></label>
+              <select name="skor_k3" id="editSkorK3" class="form-select" required>
+                <option value="5">Skor 5 - Sangat Baik (Zero Accident + APD 100% Tertib)</option>
+                <option value="4">Skor 4 - Baik (Zero Accident + Teguran Lisan Ringan)</option>
+                <option value="3">Skor 3 - Cukup (Disiplin APD Sedang)</option>
+                <option value="2">Skor 2 - Kurang (Ada Cedera Ringan / APD Jarang Dipakai)</option>
+                <option value="1">Skor 1 - Buruk (Insiden Berat / K3 Diabaikan)</option>
+              </select>
+            </div>
           </div>
         </div>
       </div>
@@ -628,6 +678,8 @@ function bukaModalEdit(data) {
   document.getElementById('editBiayaRealisasi').value = data.biaya_realisasi || '';
   document.getElementById('editSkorFoto').value = data.skor_foto_progres || 5;
   document.getElementById('editSkorBast').value = data.skor_bast || 5;
+  document.getElementById('editSkorKepuasan').value = data.skor_kepuasan_klien || 5;
+  document.getElementById('editSkorK3').value = data.skor_k3 || 5;
 
   const tglRencana = data.tanggal_selesai_rencana || '';
   const tglAktual  = data.tanggal_selesai_aktual || tglRencana;

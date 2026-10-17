@@ -46,6 +46,8 @@ final class SawServiceTest extends CIUnitTestCase
             'biaya_realisasi'        => 490000000,
             'skor_foto_progres'      => 5,
             'skor_bast'              => 4,
+            'skor_kepuasan_klien'    => 5,
+            'skor_k3'                => 4,
             'tanggal_selesai_rencana'=> '2026-06-30',
             'tanggal_selesai_aktual' => '2026-07-05',
         ];
@@ -57,6 +59,8 @@ final class SawServiceTest extends CIUnitTestCase
         $this->assertEquals(5.0, $criteriaValues['C3']);
         $this->assertEquals(4.0, $criteriaValues['C4']);
         $this->assertEquals(5.0, $criteriaValues['C5']);
+        $this->assertEquals(5.0, $criteriaValues['C6']);
+        $this->assertEquals(4.0, $criteriaValues['C7']);
     }
 
     public function testPrdSection9TestDataExactMatch(): void
@@ -203,5 +207,45 @@ final class SawServiceTest extends CIUnitTestCase
         ];
 
         $this->service->calculateSaw($alternatives, $criteria);
+    }
+
+    public function testSevenCriteriaSawCalculation(): void
+    {
+        $criteria = [
+            'C1' => ['kode' => 'C1', 'nama' => 'Progres Kurva S', 'atribut' => 'benefit', 'bobot' => 0.20],
+            'C2' => ['kode' => 'C2', 'nama' => 'Realisasi Biaya vs RAB', 'atribut' => 'cost', 'bobot' => 0.20],
+            'C3' => ['kode' => 'C3', 'nama' => 'Foto Dokumentasi Lapangan', 'atribut' => 'benefit', 'bobot' => 0.15],
+            'C4' => ['kode' => 'C4', 'nama' => 'Ketepatan BAST', 'atribut' => 'benefit', 'bobot' => 0.15],
+            'C5' => ['kode' => 'C5', 'nama' => 'Keterlambatan Hari', 'atribut' => 'cost', 'bobot' => 0.10],
+            'C6' => ['kode' => 'C6', 'nama' => 'Tingkat Kepuasan Klien', 'atribut' => 'benefit', 'bobot' => 0.10],
+            'C7' => ['kode' => 'C7', 'nama' => 'Penerapan K3', 'atribut' => 'benefit', 'bobot' => 0.10],
+        ];
+
+        $alternatives = [
+            [
+                'id'       => 1,
+                'kode'     => 'PRJ-1',
+                'nama'     => 'Villa Modern',
+                'criteria' => ['C1' => 100.0, 'C2' => 95.0, 'C3' => 5.0, 'C4' => 5.0, 'C5' => 0.0, 'C6' => 5.0, 'C7' => 5.0],
+            ],
+            [
+                'id'       => 2,
+                'kode'     => 'PRJ-2',
+                'nama'     => 'Rumah Kost',
+                'criteria' => ['C1' => 75.0, 'C2' => 110.0, 'C3' => 3.0, 'C4' => 3.0, 'C5' => 15.0, 'C6' => 3.0, 'C7' => 3.0],
+            ],
+        ];
+
+        $output = $this->service->calculateSaw($alternatives, $criteria);
+        $results = $output['results'];
+
+        $this->assertCount(2, $results);
+        $this->assertSame(1, $results[1]['peringkat']);
+        $this->assertSame('Baik', $results[1]['kategori']);
+        $this->assertSame(2, $results[2]['peringkat']);
+        $this->assertArrayHasKey('c6', $results[1]);
+        $this->assertArrayHasKey('c7', $results[1]);
+        $this->assertEquals(5.0, $results[1]['c6']);
+        $this->assertEquals(5.0, $results[1]['c7']);
     }
 }

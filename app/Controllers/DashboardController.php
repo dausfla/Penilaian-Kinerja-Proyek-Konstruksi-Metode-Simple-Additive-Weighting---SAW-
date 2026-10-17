@@ -52,7 +52,7 @@ class DashboardController extends BaseController
         $hasilList = $this->hasilSawModel->getHasilWithProyek($activePeriode['id']);
         $penilaians = $this->penilaianModel->getPenilaianWithProyek($activePeriode['id']);
 
-        if (empty($hasilList) && ! empty($penilaians)) {
+        if (! empty($penilaians) && (empty($hasilList) || ! isset($hasilList[0]['c6']) || empty($hasilList[0]['c6']))) {
             $this->executeSawCalculation($activePeriode['id']);
             $hasilList = $this->hasilSawModel->getHasilWithProyek($activePeriode['id']);
         }
@@ -148,6 +148,8 @@ class DashboardController extends BaseController
         $biayaRealisasi = (float)$this->request->getPost('biaya_realisasi');
         $skorFoto       = (int)$this->request->getPost('skor_foto_progres') ?: 5;
         $skorBast       = (int)$this->request->getPost('skor_bast') ?: 5;
+        $skorKepuasan   = (int)$this->request->getPost('skor_kepuasan_klien') ?: 5;
+        $skorK3         = (int)$this->request->getPost('skor_k3') ?: 5;
 
         $isOnTime      = $this->request->getPost('is_on_time');
         $hariTerlambat = $this->request->getPost('hari_terlambat');
@@ -169,6 +171,8 @@ class DashboardController extends BaseController
             'biaya_realisasi'        => $biayaRealisasi > 0 ? $biayaRealisasi : $nilaiRab,
             'skor_foto_progres'      => $skorFoto,
             'skor_bast'              => $skorBast,
+            'skor_kepuasan_klien'    => $skorKepuasan,
+            'skor_k3'                => $skorK3,
             'tanggal_selesai_aktual' => $tglAktual,
         ];
 
@@ -283,6 +287,8 @@ class DashboardController extends BaseController
                 'biaya_realisasi'         => $pen['biaya_realisasi'],
                 'skor_foto_progres'       => (int)($pen['skor_foto_progres'] ?? 5),
                 'skor_bast'               => $pen['skor_bast'],
+                'skor_kepuasan_klien'     => (int)($pen['skor_kepuasan_klien'] ?? 5),
+                'skor_k3'                 => (int)($pen['skor_k3'] ?? 5),
                 'tanggal_selesai_rencana' => $pen['tanggal_selesai_rencana'],
                 'tanggal_selesai_aktual'  => $pen['tanggal_selesai_aktual'],
             ];
@@ -321,6 +327,8 @@ class DashboardController extends BaseController
                 'c3'          => $item['c3'],
                 'c4'          => $item['c4'],
                 'c5'          => $item['c5'],
+                'c6'          => $item['c6'],
+                'c7'          => $item['c7'],
                 'vi'          => $item['vi'],
                 'peringkat'   => $item['peringkat'],
                 'kategori'    => $item['kategori'],

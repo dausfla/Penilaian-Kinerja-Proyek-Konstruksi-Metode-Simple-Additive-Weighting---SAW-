@@ -91,7 +91,7 @@ class DashboardController extends BaseController
             'settings'       => $settings,
             'batasBaik'      => (float)($settings['batas_baik'] ?? 0.80),
             'batasPerhatian' => (float)($settings['batas_perhatian'] ?? 0.60),
-            'jenisList'      => ['rumah', 'gedung', 'kantor', 'kost', 'apartemen', 'interior', 'landscape', 'renovasi'],
+            'jenisList'      => ['rumah', 'villa', 'gedung', 'kantor', 'kost', 'apartemen', 'interior', 'landscape', 'renovasi'],
         ]);
     }
 
@@ -105,8 +105,9 @@ class DashboardController extends BaseController
         $lokasi   = trim((string)$this->request->getPost('lokasi'));
         $nilaiRab = (float)$this->request->getPost('nilai_rab');
 
-        $tglMulai   = $this->request->getPost('tanggal_mulai') ?: date('Y-m-d');
-        $tglRencana = $this->request->getPost('tanggal_selesai_rencana') ?: date('Y-m-d', strtotime('+3 months'));
+        $tglMulai  = $this->request->getPost('tanggal_mulai') ?: date('Y-m-d');
+        $tglAktual = $this->request->getPost('tanggal_selesai_aktual') ?: $this->request->getPost('tanggal_selesai_rencana') ?: date('Y-m-d', strtotime('+3 months'));
+        $tglRencana = $tglAktual;
 
         if (empty($nama)) {
             return redirect()->back()->withInput()->with('error', 'Nama proyek wajib diisi.');
@@ -150,18 +151,6 @@ class DashboardController extends BaseController
         $skorBast       = (int)$this->request->getPost('skor_bast') ?: 5;
         $skorKepuasan   = (int)$this->request->getPost('skor_kepuasan_klien') ?: 5;
         $skorK3         = (int)$this->request->getPost('skor_k3') ?: 5;
-
-        $isOnTime      = $this->request->getPost('is_on_time');
-        $hariTerlambat = $this->request->getPost('hari_terlambat');
-        $tglAktual     = $this->request->getPost('tanggal_selesai_aktual');
-
-        if ($isOnTime === '1' || ($hariTerlambat !== null && $hariTerlambat !== '' && (int)$hariTerlambat === 0)) {
-            $tglAktual = $tglRencana;
-        } elseif ($hariTerlambat !== null && $hariTerlambat !== '' && (int)$hariTerlambat > 0) {
-            $tglAktual = date('Y-m-d', strtotime($tglRencana . ' + ' . (int)$hariTerlambat . ' days'));
-        } elseif (empty($tglAktual)) {
-            $tglAktual = $tglRencana;
-        }
 
         $penilaianData = [
             'periode_id'             => $periodeId,
@@ -289,6 +278,7 @@ class DashboardController extends BaseController
                 'skor_bast'               => $pen['skor_bast'],
                 'skor_kepuasan_klien'     => (int)($pen['skor_kepuasan_klien'] ?? 5),
                 'skor_k3'                 => (int)($pen['skor_k3'] ?? 5),
+                'tanggal_mulai'           => $pen['tanggal_mulai'] ?? null,
                 'tanggal_selesai_rencana' => $pen['tanggal_selesai_rencana'],
                 'tanggal_selesai_aktual'  => $pen['tanggal_selesai_aktual'],
             ];

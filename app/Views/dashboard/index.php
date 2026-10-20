@@ -218,7 +218,7 @@
                         'klien'                  => $h['klien'],
                         'lokasi'                 => $h['lokasi'],
                         'nilai_rab'              => (float)$h['nilai_rab'],
-                        'tanggal_selesai_rencana'=> $h['tanggal_selesai_rencana'],
+                        'tanggal_mulai'          => $h['tanggal_mulai'] ?? ($h['raw']['tanggal_mulai'] ?? date('Y-m-d')),
                         'progres_aktual'         => (float)($h['raw']['progres_aktual'] ?? $h['c1']),
                         'biaya_realisasi'        => (float)($h['raw']['biaya_realisasi'] ?? ($h['nilai_rab'] * $h['c2'] / 100)),
                         'skor_foto_progres'      => (int)($h['raw']['skor_foto_progres'] ?? $h['c3']),
@@ -336,31 +336,36 @@
               <label class="form-label small fw-bold">Nilai RAB Disepakati (Rp) <span class="text-danger">*</span></label>
               <div class="input-group">
                 <span class="input-group-text bg-light fw-bold text-muted">Rp</span>
-                <input type="number" step="0.01" min="1" name="nilai_rab" id="addNilaiRab" class="form-control mono-num fw-bold text-dark" placeholder="850000000" required>
+                <input type="number" step="0.01" min="1" name="nilai_rab" id="addNilaiRab" class="form-control mono-num fw-bold text-dark" placeholder="750000000" required>
               </div>
+              <div class="form-text small" style="font-size:0.75rem;">Total anggaran pagu (ketik angka saja tanpa titik, cth: 750000000).</div>
             </div>
             <div class="col-md-6">
-              <label class="form-label small fw-bold">Target Rencana Selesai <span class="text-danger">*</span></label>
-              <input type="date" name="tanggal_selesai_rencana" id="addTglRencana" class="form-control mono-num" required value="<?= date('Y-m-d', strtotime('+3 months')) ?>" onchange="syncAddDelay(document.getElementById('addHariTerlambat').value)">
+              <label class="form-label small fw-bold">Tanggal Mulai Proyek <span class="text-danger">*</span></label>
+              <input type="date" name="tanggal_mulai" id="addTglMulai" class="form-control mono-num" required value="<?= date('Y-m-d') ?>">
+              <div class="form-text small" style="font-size:0.75rem;">Tanggal awal pelaksanaan konstruksi fisik.</div>
             </div>
           </div>
         </div>
 
-        <!-- BAGIAN 2: NILAI LAPANGAN (SAW C1 s/d C5) -->
+        <!-- BAGIAN 2: NILAI LAPANGAN (SAW C1 s/d C7) -->
         <div>
           <h6 class="fw-bold text-dark border-bottom pb-2 d-flex align-items-center gap-2">
             <span class="badge bg-warning text-dark">2</span>
-            <span>Realisasi Lapangan & Kinerja (Kriteria C1 - C5)</span>
+            <span>Realisasi Lapangan & Kinerja (Kriteria C1 - C7)</span>
           </h6>
           <div class="row g-3 mt-1">
-            <!-- C1: Progres Aktual -->
+            <!-- C1: Mutu & Kualitas Hasil Fisik -->
             <div class="col-md-6">
-              <label class="form-label small fw-bold">C1: Progres Fisik Aktual (%) <span class="text-danger">*</span></label>
-              <div class="input-group">
-                <input type="number" step="0.01" min="0" max="100" name="progres_aktual" class="form-control mono-num" placeholder="95.50" required>
-                <span class="input-group-text">%</span>
-              </div>
-              <div class="form-text small" style="font-size:0.75rem;">Realisasi fisik di lapangan saat penilaian.</div>
+              <label class="form-label small fw-bold">C1: Mutu & Kualitas Hasil Fisik <span class="text-danger">*</span></label>
+              <select name="progres_aktual" class="form-select" required>
+                <option value="5" selected>Skor 5 - Sangat Baik / Sempurna (Finishing presisi, rapi, bebas cacat)</option>
+                <option value="4">Skor 4 - Baik (Finishing rapi, hanya cacat minor)</option>
+                <option value="3">Skor 3 - Cukup (Kualitas standar wajar)</option>
+                <option value="2">Skor 2 - Kurang (Banyak retak plesteran, kasar)</option>
+                <option value="1">Skor 1 - Buruk (Mutu fisik jauh di bawah standar)</option>
+              </select>
+              <div class="form-text small" style="font-size:0.75rem;">Skor mutu fisik hasil pengerjaan (Skor 1 s.d. 5).</div>
             </div>
 
             <!-- C2: Biaya Realisasi -->
@@ -368,9 +373,9 @@
               <label class="form-label small fw-bold">C2: Biaya Pengeluaran Realisasi (Rp) <span class="text-danger">*</span></label>
               <div class="input-group">
                 <span class="input-group-text">Rp</span>
-                <input type="number" step="0.01" min="0" name="biaya_realisasi" class="form-control mono-num" placeholder="816000000" required>
+                <input type="number" step="0.01" min="0" name="biaya_realisasi" class="form-control mono-num" placeholder="720000000" required>
               </div>
-              <div class="form-text small" style="font-size:0.75rem;">Total biaya pengeluaran riil aktual.</div>
+              <div class="form-text small" style="font-size:0.75rem;">Total biaya pengeluaran aktual (ketik angka tanpa titik, cth: 720000000).</div>
             </div>
 
             <!-- C3: Foto Progres -->
@@ -397,28 +402,6 @@
               </select>
             </div>
 
-            <!-- C5: Keterlambatan Waktu -->
-            <div class="col-12">
-              <div class="p-3 bg-light rounded border">
-                <label class="form-label small fw-bold mb-1 text-dark">C5: Keterlambatan Waktu Penyelesaian <span class="text-danger">*</span></label>
-                <div class="row g-2 align-items-center">
-                  <div class="col-sm-6">
-                    <div class="input-group">
-                      <input type="number" min="0" name="hari_terlambat" id="addHariTerlambat" class="form-control mono-num fw-bold text-dark" value="0" placeholder="0" required oninput="syncAddDelay(this.value)">
-                      <span class="input-group-text bg-white">Hari Terlambat</span>
-                    </div>
-                    <div class="form-text small" style="font-size:0.75rem;">Ketik <strong>0</strong> jika selesai tepat waktu, atau isi jumlah hari keterlambatan.</div>
-                  </div>
-                  <div class="col-sm-6">
-                    <div class="input-group input-group-sm">
-                      <span class="input-group-text bg-white small text-muted">Tanggal Selesai:</span>
-                      <input type="date" name="tanggal_selesai_aktual" id="addTglAktual" class="form-control mono-num" onchange="syncAddDate(this.value)">
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
             <!-- C6: Kepuasan Klien -->
             <div class="col-md-6">
               <label class="form-label small fw-bold">C6: Tingkat Kepuasan Klien / Owner <span class="text-danger">*</span></label>
@@ -441,6 +424,15 @@
                 <option value="2">Skor 2 - Kurang (Ada Cedera Ringan / APD Jarang Dipakai)</option>
                 <option value="1">Skor 1 - Buruk (Insiden Berat / K3 Diabaikan)</option>
               </select>
+            </div>
+
+            <!-- Tanggal Selesai Proyek (C5: Durasi Waktu) -->
+            <div class="col-12">
+              <div class="p-3 bg-light rounded border">
+                <label class="form-label small fw-bold mb-1 text-dark">Tanggal Selesai Proyek <span class="text-danger">*</span></label>
+                <input type="date" name="tanggal_selesai_aktual" id="addTglAktual" class="form-control mono-num" required value="<?= date('Y-m-d', strtotime('+3 months')) ?>">
+                <div class="form-text small" style="font-size:0.75rem;">Tanggal selesai / BAST serah terima (sistem otomatis menghitung durasi waktu C5 dari tanggal mulai).</div>
+              </div>
             </div>
           </div>
         </div>
@@ -516,26 +508,30 @@
               </div>
             </div>
             <div class="col-md-6">
-              <label class="form-label small fw-bold">Target Rencana Selesai <span class="text-danger">*</span></label>
-              <input type="date" name="tanggal_selesai_rencana" id="editTglRencana" class="form-control mono-num" required onchange="syncEditDelay(document.getElementById('editHariTerlambat').value)">
+              <label class="form-label small fw-bold">Tanggal Mulai Proyek <span class="text-danger">*</span></label>
+              <input type="date" name="tanggal_mulai" id="editTglMulai" class="form-control mono-num" required>
             </div>
           </div>
         </div>
 
-        <!-- BAGIAN 2: NILAI LAPANGAN (SAW C1 s/d C5) -->
+        <!-- BAGIAN 2: NILAI LAPANGAN (SAW C1 s/d C7) -->
         <div>
           <h6 class="fw-bold text-dark border-bottom pb-2 d-flex align-items-center gap-2">
             <span class="badge bg-warning text-dark">2</span>
-            <span>Realisasi Lapangan & Kinerja (Kriteria C1 - C5)</span>
+            <span>Realisasi Lapangan & Kinerja (Kriteria C1 - C7)</span>
           </h6>
           <div class="row g-3 mt-1">
-            <!-- C1: Progres Aktual -->
+            <!-- C1: Mutu & Kualitas Hasil Fisik -->
             <div class="col-md-6">
-              <label class="form-label small fw-bold">C1: Progres Fisik Aktual (%) <span class="text-danger">*</span></label>
-              <div class="input-group">
-                <input type="number" step="0.01" min="0" max="100" name="progres_aktual" id="editProgresAktual" class="form-control mono-num" required>
-                <span class="input-group-text">%</span>
-              </div>
+              <label class="form-label small fw-bold">C1: Mutu & Kualitas Hasil Fisik <span class="text-danger">*</span></label>
+              <select name="progres_aktual" id="editProgresAktual" class="form-select" required>
+                <option value="5">Skor 5 - Sangat Baik / Sempurna (Finishing presisi, rapi, bebas cacat)</option>
+                <option value="4">Skor 4 - Baik (Finishing rapi, hanya cacat minor)</option>
+                <option value="3">Skor 3 - Cukup (Kualitas standar wajar)</option>
+                <option value="2">Skor 2 - Kurang (Banyak retak plesteran, kasar)</option>
+                <option value="1">Skor 1 - Buruk (Mutu fisik jauh di bawah standar)</option>
+              </select>
+              <div class="form-text small" style="font-size:0.75rem;">Skor mutu fisik hasil pengerjaan (Skor 1 s.d. 5).</div>
             </div>
 
             <!-- C2: Biaya Realisasi -->
@@ -571,28 +567,6 @@
               </select>
             </div>
 
-            <!-- C5: Keterlambatan Waktu -->
-            <div class="col-12">
-              <div class="p-3 bg-light rounded border">
-                <label class="form-label small fw-bold mb-1 text-dark">C5: Keterlambatan Waktu Penyelesaian <span class="text-danger">*</span></label>
-                <div class="row g-2 align-items-center">
-                  <div class="col-sm-6">
-                    <div class="input-group">
-                      <input type="number" min="0" name="hari_terlambat" id="editHariTerlambat" class="form-control mono-num fw-bold text-dark" value="0" placeholder="0" required oninput="syncEditDelay(this.value)">
-                      <span class="input-group-text bg-white">Hari Terlambat</span>
-                    </div>
-                    <div class="form-text small" style="font-size:0.75rem;">Ketik <strong>0</strong> jika tepat waktu, atau isi jumlah hari keterlambatan.</div>
-                  </div>
-                  <div class="col-sm-6">
-                    <div class="input-group input-group-sm">
-                      <span class="input-group-text bg-white small text-muted">Tanggal Selesai:</span>
-                      <input type="date" name="tanggal_selesai_aktual" id="editTglAktual" class="form-control mono-num" onchange="syncEditDate(this.value)">
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
             <!-- C6: Kepuasan Klien -->
             <div class="col-md-6">
               <label class="form-label small fw-bold">C6: Tingkat Kepuasan Klien / Owner <span class="text-danger">*</span></label>
@@ -616,6 +590,15 @@
                 <option value="1">Skor 1 - Buruk (Insiden Berat / K3 Diabaikan)</option>
               </select>
             </div>
+
+            <!-- Tanggal Selesai Proyek (C5: Durasi Waktu) -->
+            <div class="col-12">
+              <div class="p-3 bg-light rounded border">
+                <label class="form-label small fw-bold mb-1 text-dark">Tanggal Selesai Proyek <span class="text-danger">*</span></label>
+                <input type="date" name="tanggal_selesai_aktual" id="editTglAktual" class="form-control mono-num" required>
+                <div class="form-text small" style="font-size:0.75rem;">Tanggal selesai / BAST serah terima (sistem otomatis menghitung durasi waktu C5 dari tanggal mulai).</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -631,40 +614,6 @@
 </div>
 
 <script>
-function syncAddDelay(days) {
-  const tglRencana = document.getElementById('addTglRencana').value;
-  if (!tglRencana) return;
-  const d = new Date(tglRencana);
-  d.setDate(d.getDate() + parseInt(days || 0));
-  document.getElementById('addTglAktual').value = d.toISOString().split('T')[0];
-}
-
-function syncAddDate(val) {
-  const tglRencana = document.getElementById('addTglRencana').value;
-  if (!tglRencana || !val) return;
-  const dR = new Date(tglRencana);
-  const dA = new Date(val);
-  const diff = Math.max(0, Math.ceil((dA - dR) / (1000 * 60 * 60 * 24)));
-  document.getElementById('addHariTerlambat').value = diff;
-}
-
-function syncEditDelay(days) {
-  const tglRencana = document.getElementById('editTglRencana').value;
-  if (!tglRencana) return;
-  const d = new Date(tglRencana);
-  d.setDate(d.getDate() + parseInt(days || 0));
-  document.getElementById('editTglAktual').value = d.toISOString().split('T')[0];
-}
-
-function syncEditDate(val) {
-  const tglRencana = document.getElementById('editTglRencana').value;
-  if (!tglRencana || !val) return;
-  const dR = new Date(tglRencana);
-  const dA = new Date(val);
-  const diff = Math.max(0, Math.ceil((dA - dR) / (1000 * 60 * 60 * 24)));
-  document.getElementById('editHariTerlambat').value = diff;
-}
-
 function bukaModalEdit(data) {
   document.getElementById('editProyekId').value = data.proyek_id || '';
   document.getElementById('editNama').value = data.nama || '';
@@ -673,37 +622,22 @@ function bukaModalEdit(data) {
   document.getElementById('editKlien').value = data.klien || '';
   document.getElementById('editLokasi').value = data.lokasi || '';
   document.getElementById('editNilaiRab').value = data.nilai_rab || '';
-  document.getElementById('editTglRencana').value = data.tanggal_selesai_rencana || '';
-  document.getElementById('editProgresAktual').value = data.progres_aktual || '';
+  document.getElementById('editTglMulai').value = data.tanggal_mulai || '';
+  
+  let valC1 = data.progres_aktual || 5;
+  if (valC1 > 5) valC1 = Math.round(valC1 / 20);
+  document.getElementById('editProgresAktual').value = valC1;
+  
   document.getElementById('editBiayaRealisasi').value = data.biaya_realisasi || '';
   document.getElementById('editSkorFoto').value = data.skor_foto_progres || 5;
   document.getElementById('editSkorBast').value = data.skor_bast || 5;
   document.getElementById('editSkorKepuasan').value = data.skor_kepuasan_klien || 5;
   document.getElementById('editSkorK3').value = data.skor_k3 || 5;
-
-  const tglRencana = data.tanggal_selesai_rencana || '';
-  const tglAktual  = data.tanggal_selesai_aktual || tglRencana;
-  document.getElementById('editTglAktual').value = tglAktual;
-
-  let delay = 0;
-  if (tglRencana && tglAktual) {
-    const dR = new Date(tglRencana);
-    const dA = new Date(tglAktual);
-    delay = Math.max(0, Math.ceil((dA - dR) / (1000 * 60 * 60 * 24)));
-  }
-  document.getElementById('editHariTerlambat').value = delay;
+  document.getElementById('editTglAktual').value = data.tanggal_selesai_aktual || '';
 
   const modal = new bootstrap.Modal(document.getElementById('modalEditProyek'));
   modal.show();
 }
-
-// Initial sync on load
-document.addEventListener('DOMContentLoaded', () => {
-  const addTgl = document.getElementById('addTglRencana');
-  if (addTgl && addTgl.value) {
-    syncAddDelay(0);
-  }
-});
 </script>
 
 <?= $this->endSection() ?>

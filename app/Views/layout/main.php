@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <title><?= esc($title ?? 'SPK Kinerja Proyek') ?> &bull; PT Rancang Bangun Sedaya</title>
   
   <!-- Favicon / Brand Icon -->
@@ -35,11 +38,6 @@
       <a href="<?= site_url('dashboard') ?>" class="nav-item-link <?= (url_is('dashboard') || url_is('hasil*') || url_is('')) ? 'active' : '' ?>">
         <i class="bi bi-trophy-fill text-warning"></i>
         <span>Evaluasi & Peringkat</span>
-      </a>
-
-      <a href="<?= site_url('proyek') ?>" class="nav-item-link <?= url_is('proyek*') ? 'active' : '' ?>">
-        <i class="bi bi-buildings"></i>
-        <span>Data Proyek</span>
       </a>
 
       <a href="<?= site_url('pengaturan') ?>" class="nav-item-link <?= (url_is('pengaturan*') || url_is('kriteria*')) ? 'active' : '' ?>">
@@ -140,6 +138,21 @@
     if (sidebarToggleBtn && appSidebar) {
       sidebarToggleBtn.addEventListener('click', () => {
         appSidebar.classList.toggle('show');
+      });
+    }
+
+    // Keamanan Sesi Enterprise: Cegah kembali ke halaman yang dicache setelah logout
+    window.addEventListener('pageshow', function (event) {
+      if (event.persisted || (window.performance && window.performance.getEntriesByType("navigation")[0]?.type === "back_forward")) {
+        window.location.reload();
+      }
+    });
+
+    // Cegah tombol back browser mengarahkan kembali ke halaman login saat sudah di dashboard
+    if (window.history && window.history.pushState) {
+      window.history.pushState(null, document.title, window.location.href);
+      window.addEventListener('popstate', function () {
+        window.history.pushState(null, document.title, window.location.href);
       });
     }
   </script>

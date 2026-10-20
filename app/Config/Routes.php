@@ -10,7 +10,16 @@ use CodeIgniter\Router\RouteCollection;
 $routes->get('/', 'LandingController::index');
 $routes->get('login', 'AuthController::login');
 $routes->post('login/process', 'AuthController::process');
+$routes->post('login/pin', 'AuthController::processPin');
 $routes->get('logout', 'AuthController::logout');
+
+// Lupa PIN & OTP Recovery
+$routes->get('lupa-pin', 'AuthController::forgotPin');
+$routes->post('lupa-pin/kirim-otp', 'AuthController::sendOtp');
+$routes->get('verifikasi-otp', 'AuthController::verifyOtpPage');
+$routes->post('verifikasi-otp/proses', 'AuthController::processVerifyOtp');
+$routes->get('buat-pin-baru', 'AuthController::resetPinPage');
+$routes->post('buat-pin-baru/proses', 'AuthController::processResetPin');
 
 // Protected Routes (Semua yang login sebagai Administrator)
 $routes->group('', ['filter' => 'auth'], static function ($routes) {
@@ -23,7 +32,8 @@ $routes->group('', ['filter' => 'auth'], static function ($routes) {
     $routes->get('dashboard/pdf/(:num)', 'DashboardController::pdf/$1');
 
     $routes->get('pengaturan', 'KriteriaController::index');
-    $routes->get('proyek', 'ProyekController::index');
+    $routes->addRedirect('proyek', 'dashboard');
+    $routes->addRedirect('proyek/(:any)', 'dashboard');
     $routes->get('periode', 'PeriodeController::index');
     $routes->get('hasil', 'DashboardController::index');
     $routes->get('hasil/(:num)', 'DashboardController::index/$1');

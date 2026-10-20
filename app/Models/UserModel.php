@@ -10,6 +10,6 @@ class UserModel extends Model
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
-    protected $allowedFields    = ['nama', 'username', 'password_hash', 'role', 'aktif'];
+    protected $allowedFields    = ['nama', 'username', 'password_hash', 'role', 'aktif', 'email', 'pin_hash', 'otp_code', 'otp_expires_at'];
     protected $useTimestamps    = false;
 }

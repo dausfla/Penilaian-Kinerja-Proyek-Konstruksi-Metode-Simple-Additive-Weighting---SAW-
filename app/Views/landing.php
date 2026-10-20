@@ -735,18 +735,18 @@
               <span class="criteria-code-badge"><i class="bi bi-graph-up-arrow"></i> C1</span>
               <span class="criteria-weight-badge">Bobot: 20%</span>
             </div>
-            <h3 class="criteria-title">Capaian Progres Kurva S</h3>
+            <h3 class="criteria-title">Mutu & Kualitas Hasil Fisik</h3>
             <div>
               <span class="criteria-type-badge type-benefit">
                 <i class="bi bi-arrow-up-circle-fill"></i> Jenis: Keuntungan (Benefit)
               </span>
             </div>
             <p class="criteria-text">
-              Mengukur perbandingan persentase antara realisasi fisik aktual dengan jadwal rencana Kurva S. Makin tinggi capaian fisik pekerjaan, skor penilaian semakin maksimal.
+              Mengukur tingkat kerapihan finishing, presisi struktur, dan mutu fisik hasil pekerjaan konstruksi (Skala 1 s.d. 5). Semakin tinggi mutu fisik bangunan, skor penilaian kinerja semakin maksimal.
             </p>
             <div class="criteria-formula-box">
-              <i class="bi bi-calculator text-muted"></i>
-              <span>Rumus: <strong>(Aktual / Rencana) &times; 100%</strong></span>
+              <i class="bi bi-star-fill text-warning"></i>
+              <span>Skala: <strong>Skor 1 - 5 (Finishing & Struktur)</strong></span>
             </div>
           </div>
         </div>
@@ -830,18 +830,18 @@
               <span class="criteria-code-badge"><i class="bi bi-clock-history"></i> C5</span>
               <span class="criteria-weight-badge">Bobot: 10%</span>
             </div>
-            <h3 class="criteria-title">Keterlambatan Waktu Penyelesaian</h3>
+            <h3 class="criteria-title">Waktu / Durasi Penyelesaian Proyek</h3>
             <div>
               <span class="criteria-type-badge type-cost">
                 <i class="bi bi-arrow-down-circle-fill"></i> Jenis: Biaya / Risiko (Cost)
               </span>
             </div>
             <p class="criteria-text">
-              Selisih hari kalender antara serah terima aktual dengan target rencana. Proyek yang selesai tepat waktu (0 hari) mendapatkan skor tertinggi secara otomatis.
+              Jumlah hari pelaksanaan proyek dihitung otomatis dari Tanggal Mulai ke Tanggal Selesai. Proyek yang selesai lebih cepat dan efisien memperoleh nilai kinerja waktu lebih tinggi.
             </p>
             <div class="criteria-formula-box">
               <i class="bi bi-hourglass-split text-muted"></i>
-              <span>Rumus: <strong>max(0, Selesai Aktual - Rencana) Hari</strong></span>
+              <span>Rumus: <strong>(Tanggal Selesai - Tanggal Mulai) Hari</strong></span>
             </div>
           </div>
         </div>

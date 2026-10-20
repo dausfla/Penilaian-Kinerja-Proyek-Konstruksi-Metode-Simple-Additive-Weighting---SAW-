@@ -20,6 +20,7 @@
           <th style="width: 50px;">No</th>
           <th>Nama Lengkap</th>
           <th>Username</th>
+          <th>Email OTP Gmail</th>
           <th>Hak Akses</th>
           <th class="text-center">Status</th>
           <th class="text-center" style="width: 150px;">Aksi</th>
@@ -34,6 +35,11 @@
             </td>
             <td>
               <span class="badge bg-light text-dark border font-monospace"><?= esc($u['username']) ?></span>
+            </td>
+            <td>
+              <span class="text-secondary small d-inline-flex align-items-center gap-1">
+                <i class="bi bi-envelope text-primary"></i> <?= esc($u['email'] ?? '-') ?>
+              </span>
             </td>
             <td>
               <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-2 py-1">

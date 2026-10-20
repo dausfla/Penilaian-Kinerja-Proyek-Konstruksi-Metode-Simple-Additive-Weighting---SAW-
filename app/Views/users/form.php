@@ -29,10 +29,24 @@
           </div>
 
           <div class="mb-3">
-            <label class="form-label small fw-bold">
-              Password <?= $user ? '<span class="text-muted fw-normal">(Kosongkan jika tidak diubah)</span>' : '<span class="text-danger">*</span>' ?>
-            </label>
-            <input type="password" name="password" class="form-control" placeholder="Minimal 5 karakter" <?= $user ? '' : 'required' ?>>
+            <label class="form-label small fw-bold">Alamat Email Gmail / Pemulihan <span class="text-danger">*</span></label>
+            <input type="email" name="email" class="form-control" placeholder="admin@rancangbangunsedaya.com" required value="<?= old('email', $user['email'] ?? 'admin@rancangbangunsedaya.com') ?>">
+            <div class="form-text small">Digunakan untuk menerima kode OTP jika terjadi lupa PIN.</div>
+          </div>
+
+          <div class="row g-2 mb-3">
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">
+                Password <?= $user ? '<span class="text-muted fw-normal">(Kosongkan jika tetap)</span>' : '<span class="text-danger">*</span>' ?>
+              </label>
+              <input type="password" name="password" class="form-control" placeholder="Minimal 5 karakter" <?= $user ? '' : 'required' ?>>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">
+                PIN Akses 6-Digit <?= $user ? '<span class="text-muted fw-normal">(Kosongkan jika tetap)</span>' : '<span class="text-muted fw-normal">(Default: 080905)</span>' ?>
+              </label>
+              <input type="text" name="pin" maxlength="6" pattern="[0-9]{6}" inputmode="numeric" class="form-control font-monospace" placeholder="Contoh: 080905">
+            </div>
           </div>
 
           <div class="mb-4">

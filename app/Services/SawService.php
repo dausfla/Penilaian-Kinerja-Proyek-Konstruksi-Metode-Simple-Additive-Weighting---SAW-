@@ -22,10 +22,8 @@ class SawService
      */
     public function calculateCriteriaValues(array $rawItem): array
     {
-        // C1: Capaian Progres (Benefit) = (progres_aktual / progres_rencana) * 100
-        $progresRencana = (float)($rawItem['progres_rencana'] ?? 100);
-        $progresAktual  = (float)($rawItem['progres_aktual'] ?? 0);
-        $c1 = ($progresRencana > 0) ? ($progresAktual / $progresRencana) * 100 : 0.0;
+        // C1: Mutu & Kualitas Hasil Fisik (Benefit) = Skor 1 s.d. 5
+        $c1 = (float)($rawItem['progres_aktual'] ?? 5);
 
         // C2: Biaya terhadap RAB (Cost) = (biaya_realisasi / nilai_rab) * 100
         $nilaiRab       = (float)($rawItem['nilai_rab'] ?? 1);
@@ -38,11 +36,18 @@ class SawService
         // C4: Ketepatan Serah Terima (Benefit) = Skor BAST 1 s.d. 5 dari rubrik
         $c4 = (float)($rawItem['skor_bast'] ?? 1);
 
-        // C5: Keterlambatan (Cost) = max(0, aktual - rencana) dalam hari
-        $c5 = (float)$this->calculateC5Delay(
-            $rawItem['tanggal_selesai_rencana'] ?? '',
-            $rawItem['tanggal_selesai_aktual'] ?? ''
-        );
+        // C5: Waktu / Durasi Penyelesaian Proyek (Cost) = durasi hari dari tanggal mulai sampai selesai
+        if (!empty($rawItem['tanggal_mulai']) && !empty($rawItem['tanggal_selesai_aktual'])) {
+            $c5 = (float)$this->calculateC5Duration(
+                $rawItem['tanggal_mulai'],
+                $rawItem['tanggal_selesai_aktual']
+            );
+        } else {
+            $c5 = (float)$this->calculateC5Delay(
+                $rawItem['tanggal_selesai_rencana'] ?? '',
+                $rawItem['tanggal_selesai_aktual'] ?? ''
+            );
+        }
 
         // C6: Tingkat Kepuasan Klien (Benefit) = Skor 1 s.d. 5
         $c6 = (float)($rawItem['skor_kepuasan_klien'] ?? 5);
@@ -80,6 +85,30 @@ class SawService
 
         $total = $pSp + $pPks;
         return (int)(1 + $total);
+    }
+
+    /**
+     * Hitung durasi penyelesaian proyek (hari) dari tanggal mulai ke tanggal selesai.
+     */
+    public function calculateC5Duration(string $tglMulai, string $tglSelesai): int
+    {
+        if (empty($tglMulai) || empty($tglSelesai)) {
+            return 1;
+        }
+
+        try {
+            $dtMulai   = new DateTime($tglMulai);
+            $dtSelesai = new DateTime($tglSelesai);
+
+            if ($dtSelesai < $dtMulai) {
+                return 1;
+            }
+
+            $diff = $dtMulai->diff($dtSelesai);
+            return max(1, (int)$diff->days);
+        } catch (\Throwable $e) {
+            return 1;
+        }
     }
 
     /**

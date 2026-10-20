@@ -42,7 +42,7 @@
                       <input type="text" name="kriteria[<?= $k['id'] ?>][nama]" class="form-control form-control-sm" value="<?= esc($k['nama']) ?>" required>
                       <div class="small text-muted mt-1" style="font-size: 0.75rem;">
                         <?php if ($k['kode'] === 'C1'): ?>
-                          <i class="bi bi-info-circle me-1"></i> (Aktual / Rencana) &times; 100%
+                          <i class="bi bi-info-circle me-1"></i> Skor Mutu Finishing & Struktur Fisik (1 - 5)
                         <?php elseif ($k['kode'] === 'C2'): ?>
                           <i class="bi bi-info-circle me-1"></i> (Realisasi / RAB) &times; 100%
                         <?php elseif ($k['kode'] === 'C3'): ?>
@@ -50,7 +50,7 @@
                         <?php elseif ($k['kode'] === 'C4'): ?>
                           <i class="bi bi-info-circle me-1"></i> Skor BAST rubrik 1 - 5
                         <?php elseif ($k['kode'] === 'C5'): ?>
-                          <i class="bi bi-info-circle me-1"></i> max(0, Aktual - Rencana) dalam hari
+                          <i class="bi bi-info-circle me-1"></i> Durasi Waktu Penyelesaian (Selesai - Mulai dalam Hari)
                         <?php endif; ?>
                       </div>
                     </td>

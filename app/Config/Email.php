@@ -6,9 +6,35 @@ use CodeIgniter\Config\BaseConfig;
 
 class Email extends BaseConfig
 {
-    public string $fromEmail  = '';
-    public string $fromName   = '';
+    public string $fromEmail  = 'admin@rancangbangunsedaya.com';
+    public string $fromName   = 'PT Rancang Bangun Sedaya';
     public string $recipients = '';
+
+    public function __construct()
+    {
+        parent::__construct();
+        if ($host = env('email.SMTPHost')) {
+            $this->SMTPHost = $host;
+        }
+        if ($user = env('email.SMTPUser')) {
+            $this->SMTPUser = $user;
+        }
+        if ($pass = env('email.SMTPPass')) {
+            $this->SMTPPass = $pass;
+        }
+        if ($port = env('email.SMTPPort')) {
+            $this->SMTPPort = (int)$port;
+        }
+        if ($crypto = env('email.SMTPCrypto')) {
+            $this->SMTPCrypto = $crypto;
+        }
+        if ($from = env('email.fromEmail')) {
+            $this->fromEmail = $from;
+        }
+        if ($name = env('email.fromName')) {
+            $this->fromName = $name;
+        }
+    }
 
     /**
      * The "user agent"
@@ -18,7 +44,7 @@ class Email extends BaseConfig
     /**
      * The mail sending protocol: mail, sendmail, smtp
      */
-    public string $protocol = 'mail';
+    public string $protocol = 'smtp';
 
     /**
      * The server path to Sendmail.
@@ -28,7 +54,7 @@ class Email extends BaseConfig
     /**
      * SMTP Server Hostname
      */
-    public string $SMTPHost = '';
+    public string $SMTPHost = 'smtp.gmail.com';
 
     /**
      * SMTP Username
@@ -43,7 +69,7 @@ class Email extends BaseConfig
     /**
      * SMTP Port
      */
-    public int $SMTPPort = 25;
+    public int $SMTPPort = 465;
 
     /**
      * SMTP Timeout (in seconds)
@@ -62,7 +88,7 @@ class Email extends BaseConfig
      *             to the server. 'ssl' means implicit SSL. Connection on port
      *             465 should set this to ''.
      */
-    public string $SMTPCrypto = 'tls';
+    public string $SMTPCrypto = 'ssl';
 
     /**
      * Enable word-wrap
@@ -77,7 +103,7 @@ class Email extends BaseConfig
     /**
      * Type of mail, either 'text' or 'html'
      */
-    public string $mailType = 'text';
+    public string $mailType = 'html';
 
     /**
      * Character set (utf-8, iso-8859-1, etc.)

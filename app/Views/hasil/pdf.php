@@ -182,7 +182,7 @@
         <th>Nama Proyek</th>
         <th style="width: 50px;">Jenis</th>
         <th style="width: 70px;" class="text-right">RAB (Rp)</th>
-        <th style="width: 32px;">C1 (%)</th>
+        <th style="width: 25px;">C1</th>
         <th style="width: 32px;">C2 (%)</th>
         <th style="width: 20px;">C3</th>
         <th style="width: 20px;">C4</th>
@@ -201,7 +201,7 @@
           <td class="fw-bold"><?= esc($h['proyek_nama']) ?></td>
           <td class="text-center" style="text-transform: capitalize;"><?= esc($h['jenis']) ?></td>
           <td class="text-right"><?= number_format((float)$h['nilai_rab'], 0, ',', '.') ?></td>
-          <td class="text-center"><?= number_format((float)$h['c1'], 1) ?></td>
+          <td class="text-center"><?= (int)$h['c1'] ?></td>
           <td class="text-center"><?= number_format((float)$h['c2'], 1) ?></td>
           <td class="text-center"><?= $h['c3'] ?></td>
           <td class="text-center"><?= $h['c4'] ?></td>
@@ -223,7 +223,16 @@
     </tbody>
   </table>
 
-  <!-- Rekomendasi Manajemen -->
+  <div style="font-size: 8px; color: #64748b; margin-top: -6px; margin-bottom: 12px;">
+    <strong>Keterangan Kriteria:</strong> 
+    C1: Mutu Fisik (1-5) &bull; 
+    C2: Biaya vs RAB (%) &bull; 
+    C3: Foto Progres (1-5) &bull; 
+    C4: Ketepatan BAST (1-5) &bull; 
+    C5: Durasi Waktu (Hari) &bull; 
+    C6: Kepuasan Klien (1-5) &bull; 
+    C7: Disiplin K3 (1-5)
+  </div>
   <div class="recommendation-box">
     <div class="recommendation-title">Catatan & Rekomendasi Manajerial:</div>
     <table style="width: 100%; font-size: 9.5px;">

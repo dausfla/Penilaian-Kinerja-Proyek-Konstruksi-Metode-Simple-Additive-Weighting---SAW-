@@ -97,90 +97,108 @@ class DashboardController extends BaseController
 
     public function simpanProyekDanNilai()
     {
-        $proyekId = (int)$this->request->getPost('proyek_id');
-        $nama     = trim((string)$this->request->getPost('nama'));
-        $kode     = trim((string)$this->request->getPost('kode'));
-        $jenis    = trim((string)$this->request->getPost('jenis'));
-        $klien    = trim((string)$this->request->getPost('klien'));
-        $lokasi   = trim((string)$this->request->getPost('lokasi'));
-        $nilaiRab = (float)$this->request->getPost('nilai_rab');
+        try {
+            $proyekId = (int)$this->request->getPost('proyek_id');
+            $nama     = trim((string)$this->request->getPost('nama'));
+            $kode     = trim((string)$this->request->getPost('kode'));
+            $jenis    = trim((string)$this->request->getPost('jenis'));
+            $klien    = trim((string)$this->request->getPost('klien'));
+            $lokasi   = trim((string)$this->request->getPost('lokasi'));
+            $nilaiRab = (float)$this->request->getPost('nilai_rab');
 
-        $tglMulai  = $this->request->getPost('tanggal_mulai') ?: date('Y-m-d');
-        $tglAktual = $this->request->getPost('tanggal_selesai_aktual') ?: $this->request->getPost('tanggal_selesai_rencana') ?: date('Y-m-d', strtotime('+3 months'));
-        $tglRencana = $tglAktual;
+            $tglMulai  = $this->request->getPost('tanggal_mulai') ?: date('Y-m-d');
+            $tglAktual = $this->request->getPost('tanggal_selesai_aktual') ?: $this->request->getPost('tanggal_selesai_rencana') ?: date('Y-m-d', strtotime('+3 months'));
+            $tglRencana = $tglAktual;
 
-        if (empty($nama)) {
-            return redirect()->back()->withInput()->with('error', 'Nama proyek wajib diisi.');
+            if (empty($nama)) {
+                return redirect()->back()->withInput()->with('error', 'Nama proyek wajib diisi.');
+            }
+
+            if (empty($kode)) {
+                $kode = 'PRJ-' . strtoupper(substr($jenis ?: 'GEN', 0, 3)) . '-' . sprintf('%02d', mt_rand(1, 99));
+            }
+
+            // 1. Simpan atau Update Master Proyek (Dengan Proteksi Anti-Duplicate Key)
+            $proyekData = [
+                'nama'                    => $nama,
+                'kode'                    => $kode,
+                'jenis'                   => $jenis ?: 'rumah',
+                'klien'                   => $klien ?: '-',
+                'lokasi'                  => $lokasi ?: 'Bogor',
+                'nilai_rab'               => $nilaiRab > 0 ? $nilaiRab : 100000000,
+                'tanggal_mulai'           => $tglMulai,
+                'tanggal_selesai_rencana' => $tglRencana,
+            ];
+
+            if ($proyekId > 0) {
+                // Jika sedang edit, cek apakah kode bentrok dengan proyek lain
+                $clash = $this->proyekModel->where('kode', $kode)->where('id !=', $proyekId)->first();
+                if ($clash) {
+                    $proyekData['kode'] = $kode . '-' . $proyekId;
+                }
+                $this->proyekModel->update($proyekId, $proyekData);
+            } else {
+                // Jika tambah baru: periksa apakah kode proyek ini sudah pernah ada di database
+                $existingByKode = $this->proyekModel->where('kode', $kode)->first();
+                if ($existingByKode) {
+                    // Update master proyek yang sudah ada untuk mencegah crash "proyek_kode_key duplicate"
+                    $proyekId = (int)$existingByKode['id'];
+                    $this->proyekModel->update($proyekId, $proyekData);
+                } else {
+                    $this->proyekModel->insert($proyekData);
+                    $proyekId = $this->proyekModel->getInsertID();
+                }
+            }
+
+            // 2. Periode Aktif
+            $periodeId = (int)$this->request->getPost('periode_id');
+            if ($periodeId <= 0) {
+                $activePeriode = $this->getOrCreateActivePeriode();
+                $periodeId     = $activePeriode['id'];
+            }
+
+            // 3. Raw Evaluation Values (Kriteria C1 - C7)
+            $progresRencana = 100.00;
+            $progresAktual  = (float)$this->request->getPost('progres_aktual');
+            $biayaRealisasi = (float)$this->request->getPost('biaya_realisasi');
+            $skorFoto       = (int)$this->request->getPost('skor_foto_progres') ?: 5;
+            $skorBast       = (int)$this->request->getPost('skor_bast') ?: 5;
+            $skorKepuasan   = (int)$this->request->getPost('skor_kepuasan_klien') ?: 5;
+            $skorK3         = (int)$this->request->getPost('skor_k3') ?: 5;
+
+            $penilaianData = [
+                'periode_id'             => $periodeId,
+                'proyek_id'              => $proyekId,
+                'progres_rencana'        => $progresRencana,
+                'progres_aktual'         => $progresAktual,
+                'biaya_realisasi'        => $biayaRealisasi > 0 ? $biayaRealisasi : $nilaiRab,
+                'skor_foto_progres'      => $skorFoto,
+                'skor_bast'              => $skorBast,
+                'skor_kepuasan_klien'    => $skorKepuasan,
+                'skor_k3'                => $skorK3,
+                'tanggal_selesai_aktual' => $tglAktual,
+            ];
+
+            $existing = $this->penilaianModel
+                ->where('periode_id', $periodeId)
+                ->where('proyek_id', $proyekId)
+                ->first();
+
+            if ($existing) {
+                $this->penilaianModel->update($existing['id'], $penilaianData);
+            } else {
+                $this->penilaianModel->insert($penilaianData);
+            }
+
+            // 4. Hitung Ulang Peringkat SAW Secara Real-Time
+            $this->executeSawCalculation($periodeId);
+
+            return redirect()->to(site_url('dashboard/' . $periodeId))
+                ->with('success', 'Data proyek "' . esc($nama) . '" dan nilai evaluasi berhasil disimpan! Peringkat telah otomatis diperbarui.');
+        } catch (\Throwable $e) {
+            log_message('error', 'Gagal Simpan Proyek: ' . $e->getMessage());
+            return redirect()->back()->withInput()->with('error', 'Gagal menyimpan proyek: ' . $e->getMessage());
         }
-
-        if (empty($kode)) {
-            $kode = 'PRJ-' . strtoupper(substr($jenis ?: 'GEN', 0, 3)) . '-' . sprintf('%02d', mt_rand(1, 99));
-        }
-
-        // 1. Save or Update Proyek
-        $proyekData = [
-            'nama'                    => $nama,
-            'kode'                    => $kode,
-            'jenis'                   => $jenis ?: 'rumah',
-            'klien'                   => $klien ?: '-',
-            'lokasi'                  => $lokasi ?: 'Bogor',
-            'nilai_rab'               => $nilaiRab > 0 ? $nilaiRab : 100000000,
-            'tanggal_mulai'           => $tglMulai,
-            'tanggal_selesai_rencana' => $tglRencana,
-        ];
-
-        if ($proyekId > 0) {
-            $this->proyekModel->update($proyekId, $proyekData);
-        } else {
-            $this->proyekModel->insert($proyekData);
-            $proyekId = $this->proyekModel->getInsertID();
-        }
-
-        // 2. Active Periode
-        $periodeId = (int)$this->request->getPost('periode_id');
-        if ($periodeId <= 0) {
-            $activePeriode = $this->getOrCreateActivePeriode();
-            $periodeId     = $activePeriode['id'];
-        }
-
-        // 3. Raw Evaluation Values
-        $progresRencana = 100.00;
-        $progresAktual  = (float)$this->request->getPost('progres_aktual');
-        $biayaRealisasi = (float)$this->request->getPost('biaya_realisasi');
-        $skorFoto       = (int)$this->request->getPost('skor_foto_progres') ?: 5;
-        $skorBast       = (int)$this->request->getPost('skor_bast') ?: 5;
-        $skorKepuasan   = (int)$this->request->getPost('skor_kepuasan_klien') ?: 5;
-        $skorK3         = (int)$this->request->getPost('skor_k3') ?: 5;
-
-        $penilaianData = [
-            'periode_id'             => $periodeId,
-            'proyek_id'              => $proyekId,
-            'progres_rencana'        => $progresRencana,
-            'progres_aktual'         => $progresAktual,
-            'biaya_realisasi'        => $biayaRealisasi > 0 ? $biayaRealisasi : $nilaiRab,
-            'skor_foto_progres'      => $skorFoto,
-            'skor_bast'              => $skorBast,
-            'skor_kepuasan_klien'    => $skorKepuasan,
-            'skor_k3'                => $skorK3,
-            'tanggal_selesai_aktual' => $tglAktual,
-        ];
-
-        $existing = $this->penilaianModel
-            ->where('periode_id', $periodeId)
-            ->where('proyek_id', $proyekId)
-            ->first();
-
-        if ($existing) {
-            $this->penilaianModel->update($existing['id'], $penilaianData);
-        } else {
-            $this->penilaianModel->insert($penilaianData);
-        }
-
-        // 4. Calculate SAW Rankings Immediately
-        $this->executeSawCalculation($periodeId);
-
-        return redirect()->to(site_url('dashboard/' . $periodeId))
-            ->with('success', 'Data proyek "' . esc($nama) . '" dan nilai evaluasi berhasil disimpan! Peringkat telah otomatis diperbarui.');
     }
 
     public function hitungUlang(?int $periodeId = null)
@@ -198,16 +216,27 @@ class DashboardController extends BaseController
 
     public function hapusProyek(int $proyekId)
     {
-        $activePeriode = $this->getOrCreateActivePeriode();
-        $periodeId     = $activePeriode['id'];
+        try {
+            $activePeriode = $this->getOrCreateActivePeriode();
+            $periodeId     = $activePeriode['id'];
 
-        $this->penilaianModel->where('periode_id', $periodeId)->where('proyek_id', $proyekId)->delete();
-        $this->hasilSawModel->where('periode_id', $periodeId)->where('proyek_id', $proyekId)->delete();
+            $this->penilaianModel->where('periode_id', $periodeId)->where('proyek_id', $proyekId)->delete();
+            $this->hasilSawModel->where('periode_id', $periodeId)->where('proyek_id', $proyekId)->delete();
 
-        $this->executeSawCalculation($periodeId);
+            // Bersihkan juga master proyek jika tidak ada penilaian lain agar kode proyek bisa digunakan kembali secara bersih
+            $remainingPenilaian = $this->penilaianModel->where('proyek_id', $proyekId)->countAllResults();
+            if ($remainingPenilaian === 0) {
+                $this->proyekModel->delete($proyekId);
+            }
 
-        return redirect()->to(site_url('dashboard/' . $periodeId))
-            ->with('success', 'Proyek berhasil dihapus dari evaluasi dan peringkat telah diperbarui.');
+            $this->executeSawCalculation($periodeId);
+
+            return redirect()->to(site_url('dashboard/' . $periodeId))
+                ->with('success', 'Proyek berhasil dihapus dari evaluasi dan peringkat telah diperbarui.');
+        } catch (\Throwable $e) {
+            log_message('error', 'Gagal Hapus Proyek: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Gagal menghapus proyek: ' . $e->getMessage());
+        }
     }
 
     public function pdf(?int $periodeId = null)

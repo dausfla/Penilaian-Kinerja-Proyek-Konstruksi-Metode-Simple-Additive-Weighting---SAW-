@@ -172,5 +172,81 @@ final class HasilViewTest extends CIUnitTestCase
         $this->assertStringNotContainsString('Ganti Periode', $html);
         $this->assertStringNotContainsString('Dalam Sesi Ini', $html);
     }
+
+    public function testPdfViewRendersExecutiveSummaryWithProjectIdentityAndRealization(): void
+    {
+        $data = [
+            'periode'        => [
+                'id'                => 1,
+                'nama'              => 'Evaluasi Portofolio Proyek 2026',
+                'tanggal_penilaian' => '2026-10-21',
+            ],
+            'hasilList'      => [
+                [
+                    'peringkat'               => 1,
+                    'proyek_kode'             => 'PRY-001',
+                    'proyek_nama'             => 'Pembangunan Gedung Kantor A',
+                    'jenis'                   => 'gedung',
+                    'klien'                   => 'PT Mitra Usaha',
+                    'lokasi'                  => 'Jl. Pajajaran No. 45 Bogor',
+                    'nilai_rab'               => 1500000000,
+                    'biaya_realisasi'         => 1420000000,
+                    'tanggal_mulai'           => '2026-01-10',
+                    'tanggal_selesai_rencana' => '2026-06-30',
+                    'tanggal_selesai_aktual'  => '2026-06-25',
+                    'progres_aktual'          => 5,
+                    'skor_foto_progres'       => 5,
+                    'skor_bast'               => 4,
+                    'skor_kepuasan_klien'     => 5,
+                    'skor_k3'                 => 5,
+                    'c1'                      => 5.0,
+                    'c2'                      => 94.6667,
+                    'c3'                      => 5.0,
+                    'c4'                      => 4.0,
+                    'c5'                      => 166.0,
+                    'c6'                      => 5.0,
+                    'c7'                      => 5.0,
+                    'vi'                      => 0.9482,
+                    'kategori'                => 'Baik',
+                ],
+            ],
+            'kriterias'      => [],
+            'settings'       => [
+                'nama_perusahaan'   => 'PT Rancang Bangun Sedaya',
+                'alamat_perusahaan' => '(Head Quarter): Pasirmulya, Kecamatan Bogor Barat, Kota Bogor, Jawa Barat 16118',
+            ],
+            'batasBaik'      => 0.80,
+            'batasPerhatian' => 0.60,
+            'printedBy'      => 'Muhamad Firdaus',
+            'printDate'      => '21 October 2026 17:00',
+        ];
+
+        $html = view('hasil/pdf', $data);
+
+        // Sections
+        $this->assertStringContainsString('I. Rekapitulasi Eksekutif Hasil Penilaian Proyek', $html);
+        $this->assertStringContainsString('II. Ringkasan Rinci Performa Proyek & Realisasi Lapangan', $html);
+        $this->assertStringContainsString('III. Catatan & Rekomendasi Manajerial', $html);
+        $this->assertStringContainsString('Ir. Hendra Gunawan, MT.', $html);
+
+        // Identity & Realization
+        $this->assertStringContainsString('PRY-001', $html);
+        $this->assertStringContainsString('Pembangunan Gedung Kantor A', $html);
+        $this->assertStringContainsString('PT Mitra Usaha', $html);
+        $this->assertStringContainsString('Jl. Pajajaran No. 45 Bogor', $html);
+        $this->assertStringContainsString('1.500.000.000', $html);
+        $this->assertStringContainsString('1.420.000.000', $html);
+        $this->assertStringContainsString('Efisien Rp 80.000.000', $html);
+        $this->assertStringContainsString('166 Hari', $html);
+
+        // Criteria C1 - C7
+        $this->assertStringContainsString('Mutu & Kualitas Hasil Fisik', $html);
+        $this->assertStringContainsString('Pengendalian Biaya vs RAB', $html);
+        $this->assertStringContainsString('Dokumentasi Foto Progres Lapangan', $html);
+        $this->assertStringContainsString('Ketepatan Berita Acara (BAST)', $html);
+        $this->assertStringContainsString('Durasi Waktu Pelaksanaan', $html);
+        $this->assertStringContainsString('Tingkat Kepuasan Klien / Owner', $html);
+        $this->assertStringContainsString('Penerapan Disiplin K3 Lapangan', $html);
+    }
 }
 

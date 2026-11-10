@@ -22,19 +22,19 @@ class SawService
      */
     public function calculateCriteriaValues(array $rawItem): array
     {
-        // C1: Mutu & Kualitas Hasil Fisik (Benefit) = Skor 1 s.d. 5
-        $c1 = (float)($rawItem['progres_aktual'] ?? 5);
+        // C1: Mutu & Kualitas Hasil Fisik (Benefit) = Skor 1 s.d. 3
+        $c1 = (float)($rawItem['progres_aktual'] ?? 3);
 
         // C2: Biaya terhadap RAB (Cost) = (biaya_realisasi / nilai_rab) * 100
         $nilaiRab       = (float)($rawItem['nilai_rab'] ?? 1);
         $biayaRealisasi = (float)($rawItem['biaya_realisasi'] ?? 0);
         $c2 = ($nilaiRab > 0) ? ($biayaRealisasi / $nilaiRab) * 100 : 0.0;
 
-        // C3: Dokumentasi Foto Progres Lapangan (Benefit) = Skor 1 s.d. 5
-        $c3 = (float)($rawItem['skor_foto_progres'] ?? 1);
+        // C3: Dokumentasi Foto Progres Lapangan (Benefit) = Skor 1 s.d. 3
+        $c3 = (float)($rawItem['skor_foto_progres'] ?? 3);
 
-        // C4: Ketepatan Serah Terima (Benefit) = Skor BAST 1 s.d. 5 dari rubrik
-        $c4 = (float)($rawItem['skor_bast'] ?? 1);
+        // C4: Ketepatan Serah Terima (Benefit) = Skor BAST 1 s.d. 3 dari rubrik
+        $c4 = (float)($rawItem['skor_bast'] ?? 3);
 
         // C5: Waktu / Durasi Penyelesaian Proyek (Cost) = durasi hari dari tanggal mulai sampai selesai
         if (!empty($rawItem['tanggal_mulai']) && !empty($rawItem['tanggal_selesai_aktual'])) {
@@ -49,11 +49,11 @@ class SawService
             );
         }
 
-        // C6: Tingkat Kepuasan Klien (Benefit) = Skor 1 s.d. 5
-        $c6 = (float)($rawItem['skor_kepuasan_klien'] ?? 5);
+        // C6: Tingkat Kepuasan Klien (Benefit) = Skor 1 s.d. 3
+        $c6 = (float)($rawItem['skor_kepuasan_klien'] ?? 3);
 
-        // C7: Penerapan K3 & Keselamatan Kerja (Benefit) = Skor 1 s.d. 5
-        $c7 = (float)($rawItem['skor_k3'] ?? 5);
+        // C7: Penerapan K3 & Keselamatan Kerja (Benefit) = Skor 1 s.d. 3
+        $c7 = (float)($rawItem['skor_k3'] ?? 3);
 
         return [
             'C1' => round($c1, 4),

@@ -42,15 +42,19 @@
                       <input type="text" name="kriteria[<?= $k['id'] ?>][nama]" class="form-control form-control-sm" value="<?= esc($k['nama']) ?>" required>
                       <div class="small text-muted mt-1" style="font-size: 0.75rem;">
                         <?php if ($k['kode'] === 'C1'): ?>
-                          <i class="bi bi-info-circle me-1"></i> Skor Mutu Finishing & Struktur Fisik (1 - 5)
+                          <i class="bi bi-info-circle me-1"></i> Skor Mutu Finishing & Struktur Fisik (1 - 3)
                         <?php elseif ($k['kode'] === 'C2'): ?>
                           <i class="bi bi-info-circle me-1"></i> (Realisasi / RAB) &times; 100%
                         <?php elseif ($k['kode'] === 'C3'): ?>
-                          <i class="bi bi-info-circle me-1"></i> Skor rubrik foto progres fisik (1 - 5)
+                          <i class="bi bi-info-circle me-1"></i> Skor rubrik foto progres fisik (1 - 3)
                         <?php elseif ($k['kode'] === 'C4'): ?>
-                          <i class="bi bi-info-circle me-1"></i> Skor BAST rubrik 1 - 5
+                          <i class="bi bi-info-circle me-1"></i> Skor BAST rubrik (1 - 3)
                         <?php elseif ($k['kode'] === 'C5'): ?>
                           <i class="bi bi-info-circle me-1"></i> Durasi Waktu Penyelesaian (Selesai - Mulai dalam Hari)
+                        <?php elseif ($k['kode'] === 'C6'): ?>
+                          <i class="bi bi-info-circle me-1"></i> Tingkat Kepuasan Klien/Owner (1 - 3)
+                        <?php elseif ($k['kode'] === 'C7'): ?>
+                          <i class="bi bi-info-circle me-1"></i> Penerapan K3 & Keselamatan Kerja (1 - 3)
                         <?php endif; ?>
                       </div>
                     </td>
@@ -165,11 +169,9 @@
       </div>
       <div class="card-body p-3">
         <ul class="list-group list-group-flush small" style="font-size: 0.78rem;">
-          <li class="list-group-item px-0 py-1"><strong>Skor 5:</strong> Sangat Lengkap (tiap tahapan, timestamp GPS/tanggal jelas)</li>
-          <li class="list-group-item px-0 py-1"><strong>Skor 4:</strong> Lengkap (foto progres rutin pekerjaan utama terverifikasi)</li>
-          <li class="list-group-item px-0 py-1"><strong>Skor 3:</strong> Cukup (sebagian besar ada, beberapa item minor terlewat)</li>
-          <li class="list-group-item px-0 py-1"><strong>Skor 2:</strong> Kurang (foto minim, sudut visual kurang jelas)</li>
-          <li class="list-group-item px-0 py-1"><strong>Skor 1:</strong> Sangat Kurang / Tidak Ada bukti foto</li>
+          <li class="list-group-item px-0 py-1"><strong>Skor 3:</strong> Lengkap (tiap tahapan/zona terdokumentasi rapi & rutin)</li>
+          <li class="list-group-item px-0 py-1"><strong>Skor 2:</strong> Cukup (foto pekerjaan utama saja terarsip)</li>
+          <li class="list-group-item px-0 py-1"><strong>Skor 1:</strong> Minim / Tidak Ada bukti foto lapangan</li>
         </ul>
       </div>
     </div>
@@ -181,11 +183,9 @@
       </div>
       <div class="card-body p-3">
         <ul class="list-group list-group-flush small" style="font-size: 0.78rem;">
-          <li class="list-group-item px-0 py-1"><strong>Skor 5:</strong> Lengkap, tepat waktu, tanpa catatan revisi</li>
-          <li class="list-group-item px-0 py-1"><strong>Skor 4:</strong> Lengkap, tepat waktu, ada catatan minor tuntas</li>
-          <li class="list-group-item px-0 py-1"><strong>Skor 3:</strong> BAST ada, terlambat ringan</li>
-          <li class="list-group-item px-0 py-1"><strong>Skor 2:</strong> BAST ada, terlambat & ada catatan belum tuntas</li>
-          <li class="list-group-item px-0 py-1"><strong>Skor 1:</strong> BAST belum ada / belum disetujui klien</li>
+          <li class="list-group-item px-0 py-1"><strong>Skor 3:</strong> Tepat Waktu (lengkap, tanpa catatan revisi)</li>
+          <li class="list-group-item px-0 py-1"><strong>Skor 2:</strong> Catatan Ringan (ada perbaikan minor tuntas)</li>
+          <li class="list-group-item px-0 py-1"><strong>Skor 1:</strong> Terlambat / Ada catatan revisi signifikan</li>
         </ul>
       </div>
     </div>

@@ -161,10 +161,10 @@ class DashboardController extends BaseController
             $progresRencana = 100.00;
             $progresAktual  = (float)$this->request->getPost('progres_aktual');
             $biayaRealisasi = (float)$this->request->getPost('biaya_realisasi');
-            $skorFoto       = (int)$this->request->getPost('skor_foto_progres') ?: 5;
-            $skorBast       = (int)$this->request->getPost('skor_bast') ?: 5;
-            $skorKepuasan   = (int)$this->request->getPost('skor_kepuasan_klien') ?: 5;
-            $skorK3         = (int)$this->request->getPost('skor_k3') ?: 5;
+            $skorFoto       = (int)$this->request->getPost('skor_foto_progres') ?: 3;
+            $skorBast       = (int)$this->request->getPost('skor_bast') ?: 3;
+            $skorKepuasan   = (int)$this->request->getPost('skor_kepuasan_klien') ?: 3;
+            $skorK3         = (int)$this->request->getPost('skor_k3') ?: 3;
 
             $penilaianData = [
                 'periode_id'             => $periodeId,
@@ -303,10 +303,10 @@ class DashboardController extends BaseController
                 'progres_aktual'          => $pen['progres_aktual'],
                 'nilai_rab'               => $pen['nilai_rab'],
                 'biaya_realisasi'         => $pen['biaya_realisasi'],
-                'skor_foto_progres'       => (int)($pen['skor_foto_progres'] ?? 5),
-                'skor_bast'               => $pen['skor_bast'],
-                'skor_kepuasan_klien'     => (int)($pen['skor_kepuasan_klien'] ?? 5),
-                'skor_k3'                 => (int)($pen['skor_k3'] ?? 5),
+                'skor_foto_progres'       => (int)($pen['skor_foto_progres'] ?? 3),
+                'skor_bast'               => (int)($pen['skor_bast'] ?? 3),
+                'skor_kepuasan_klien'     => (int)($pen['skor_kepuasan_klien'] ?? 3),
+                'skor_k3'                 => (int)($pen['skor_k3'] ?? 3),
                 'tanggal_mulai'           => $pen['tanggal_mulai'] ?? null,
                 'tanggal_selesai_rencana' => $pen['tanggal_selesai_rencana'],
                 'tanggal_selesai_aktual'  => $pen['tanggal_selesai_aktual'],

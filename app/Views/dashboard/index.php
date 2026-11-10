@@ -11,7 +11,7 @@
       </div>
       <h3 class="fw-bold mb-1 text-white">Evaluasi & Peringkat Kinerja Proyek</h3>
       <p class="text-white-50 small mb-0">
-        Metode Simple Additive Weighting (SAW) &bull; Evaluasi Kurva S, efisiensi RAB, dokumentasi foto, dan Berita Acara Serah Terima.
+        Metode Simple Additive Weighting (SAW) &bull; Evaluasi mutu fisik, efisiensi RAB, dokumentasi foto, kepuasan owner, dan BAST.
       </p>
     </div>
 
@@ -250,7 +250,7 @@
                 <i class="bi bi-check-circle-fill"></i> Kategori Baik (Skor Minimal <?= number_format($batasBaik, 2) ?> ke Atas)
               </div>
               <p class="small text-muted mb-0">
-                Proyek berjalan sesuai Kurva S, efisiensi anggaran terjaga, dan dokumentasi foto lapangan lengkap. Pertahankan ritme kerja dan koordinasi mitra.
+                Pekerjaan fisik rapi, biaya terkendali aman sesuai pagu RAB, dan proyek selesai tepat waktu. Pertahankan standar mutu kerja dan koordinasi tim lapangan.
               </p>
             </div>
           </div>
@@ -260,7 +260,7 @@
                 <i class="bi bi-exclamation-triangle-fill"></i> Perlu Perhatian (Skor <?= number_format($batasPerhatian, 2) ?> s/d <?= number_format($batasBaik - 0.01, 2) ?>)
               </div>
               <p class="small text-muted mb-0">
-                Terdapat deviasi ringan pada progres fisik, kenaikan pengeluaran biaya, atau keterlambatan waktu serah terima. Lakukan rapat evaluasi berkala segera.
+                Terdapat catatan pada mutu hasil kerja, pengeluaran mendekati pagu RAB, atau waktu pengerjaan sedikit molor. Segera lakukan pengecekan langsung ke lokasi proyek.
               </p>
             </div>
           </div>
@@ -270,7 +270,7 @@
                 <i class="bi bi-exclamation-octagon-fill"></i> Berisiko / Terlambat (Skor di Bawah <?= number_format($batasPerhatian, 2) ?>)
               </div>
               <p class="small text-muted mb-0">
-                Prioritas intervensi penanganan segera! Terapkan percepatan jadwal, penambahan tenaga kerja, evaluasi hambatan teknis, dan audit pengeluaran RAB.
+                Perlu penanganan dan tindakan segera! Terjadi keterlambatan waktu, biaya membengkak melebihi RAB, atau mutu di bawah standar. Segera evaluasi kendala lapangan dan tambah tenaga kerja.
               </p>
             </div>
           </div>
@@ -359,13 +359,11 @@
             <div class="col-md-6">
               <label class="form-label small fw-bold">C1: Mutu & Kualitas Hasil Fisik <span class="text-danger">*</span></label>
               <select name="progres_aktual" class="form-select" required>
-                <option value="5" selected>Skor 5 - Sangat Baik / Sempurna (Finishing presisi, rapi, bebas cacat)</option>
-                <option value="4">Skor 4 - Baik (Finishing rapi, hanya cacat minor)</option>
-                <option value="3">Skor 3 - Cukup (Kualitas standar wajar)</option>
-                <option value="2">Skor 2 - Kurang (Banyak retak plesteran, kasar)</option>
-                <option value="1">Skor 1 - Buruk (Mutu fisik jauh di bawah standar)</option>
+                <option value="3" selected>Skor 3 - Baik / Presisi (Finishing rapi, struktur kokoh, bebas cacat)</option>
+                <option value="2">Skor 2 - Cukup (Kualitas standar wajar, cacat minor)</option>
+                <option value="1">Skor 1 - Kurang (Kasar, banyak cacat fisik)</option>
               </select>
-              <div class="form-text small" style="font-size:0.75rem;">Skor mutu fisik hasil pengerjaan (Skor 1 s.d. 5).</div>
+              <div class="form-text small" style="font-size:0.75rem;">Skor mutu fisik hasil pengerjaan (Skor 1 s.d. 3).</div>
             </div>
 
             <!-- C2: Biaya Realisasi -->
@@ -382,11 +380,9 @@
             <div class="col-md-6">
               <label class="form-label small fw-bold">C3: Dokumentasi Foto Progres Lapangan <span class="text-danger">*</span></label>
               <select name="skor_foto_progres" class="form-select" required>
-                <option value="5" selected>Skor 5 - Sangat Lengkap (Rutin & Terarsip Rapih)</option>
-                <option value="4">Skor 4 - Lengkap (Pekerjaan Utama Rutin Ada)</option>
-                <option value="3">Skor 3 - Cukup (Hanya Zona Tertentu)</option>
-                <option value="2">Skor 2 - Kurang (Jarang Difoto)</option>
-                <option value="1">Skor 1 - Tidak Ada / Sangat Minim</option>
+                <option value="3" selected>Skor 3 - Lengkap (Rutin & terarsip rapi tiap tahapan)</option>
+                <option value="2">Skor 2 - Cukup (Foto pekerjaan utama saja)</option>
+                <option value="1">Skor 1 - Minim / Tidak Ada</option>
               </select>
             </div>
 
@@ -394,11 +390,9 @@
             <div class="col-md-6">
               <label class="form-label small fw-bold">C4: Ketepatan Serah Terima / BAST <span class="text-danger">*</span></label>
               <select name="skor_bast" class="form-select" required>
-                <option value="5" selected>Skor 5 - Sempurna (Tepat Waktu Tanpa Catatan)</option>
-                <option value="4">Skor 4 - Catatan Ringan</option>
-                <option value="3">Skor 3 - Terlambat Ringan</option>
-                <option value="2">Skor 2 - Ada Catatan Perbaikan</option>
-                <option value="1">Skor 1 - Belum Ada BAST</option>
+                <option value="3" selected>Skor 3 - Tepat Waktu (Lengkap & tanpa catatan revisi)</option>
+                <option value="2">Skor 2 - Catatan Ringan (Ada perbaikan minor)</option>
+                <option value="1">Skor 1 - Terlambat / Ada Catatan Signifikan</option>
               </select>
             </div>
 
@@ -406,11 +400,9 @@
             <div class="col-md-6">
               <label class="form-label small fw-bold">C6: Tingkat Kepuasan Klien / Owner <span class="text-danger">*</span></label>
               <select name="skor_kepuasan_klien" class="form-select" required>
-                <option value="5" selected>Skor 5 - Sangat Puas (Puas Tanpa Catatan / Komplain)</option>
-                <option value="4">Skor 4 - Puas (Ada Masukan / Catatan Minor)</option>
-                <option value="3">Skor 3 - Cukup Puas</option>
-                <option value="2">Skor 2 - Kurang Puas (Ada Keluhan Signifikan)</option>
-                <option value="1">Skor 1 - Tidak Puas / Sangat Kecewa</option>
+                <option value="3" selected>Skor 3 - Puas (Sesuai ekspektasi klien, tanpa komplain)</option>
+                <option value="2">Skor 2 - Cukup Puas (Ada masukan/keluhan minor)</option>
+                <option value="1">Skor 1 - Kurang Puas (Banyak keluhan/komplain)</option>
               </select>
             </div>
 
@@ -418,11 +410,9 @@
             <div class="col-md-6">
               <label class="form-label small fw-bold">C7: Penerapan K3 & Keselamatan Kerja <span class="text-danger">*</span></label>
               <select name="skor_k3" class="form-select" required>
-                <option value="5" selected>Skor 5 - Sangat Baik (Zero Accident + APD 100% Tertib)</option>
-                <option value="4">Skor 4 - Baik (Zero Accident + Teguran Lisan Ringan)</option>
-                <option value="3">Skor 3 - Cukup (Disiplin APD Sedang)</option>
-                <option value="2">Skor 2 - Kurang (Ada Cedera Ringan / APD Jarang Dipakai)</option>
-                <option value="1">Skor 1 - Buruk (Insiden Berat / K3 Diabaikan)</option>
+                <option value="3" selected>Skor 3 - Baik (Zero accident + APD tertib 100%)</option>
+                <option value="2">Skor 2 - Cukup (Teguran lisan ringan, disiplin APD sedang)</option>
+                <option value="1">Skor 1 - Kurang (Ada insiden / K3 diabaikan)</option>
               </select>
             </div>
 
@@ -525,13 +515,11 @@
             <div class="col-md-6">
               <label class="form-label small fw-bold">C1: Mutu & Kualitas Hasil Fisik <span class="text-danger">*</span></label>
               <select name="progres_aktual" id="editProgresAktual" class="form-select" required>
-                <option value="5">Skor 5 - Sangat Baik / Sempurna (Finishing presisi, rapi, bebas cacat)</option>
-                <option value="4">Skor 4 - Baik (Finishing rapi, hanya cacat minor)</option>
-                <option value="3">Skor 3 - Cukup (Kualitas standar wajar)</option>
-                <option value="2">Skor 2 - Kurang (Banyak retak plesteran, kasar)</option>
-                <option value="1">Skor 1 - Buruk (Mutu fisik jauh di bawah standar)</option>
+                <option value="3">Skor 3 - Baik / Presisi (Finishing rapi, struktur kokoh, bebas cacat)</option>
+                <option value="2">Skor 2 - Cukup (Kualitas standar wajar, cacat minor)</option>
+                <option value="1">Skor 1 - Kurang (Kasar, banyak cacat fisik)</option>
               </select>
-              <div class="form-text small" style="font-size:0.75rem;">Skor mutu fisik hasil pengerjaan (Skor 1 s.d. 5).</div>
+              <div class="form-text small" style="font-size:0.75rem;">Skor mutu fisik hasil pengerjaan (Skor 1 s.d. 3).</div>
             </div>
 
             <!-- C2: Biaya Realisasi -->
@@ -547,11 +535,9 @@
             <div class="col-md-6">
               <label class="form-label small fw-bold">C3: Dokumentasi Foto Progres Lapangan <span class="text-danger">*</span></label>
               <select name="skor_foto_progres" id="editSkorFoto" class="form-select" required>
-                <option value="5">Skor 5 - Sangat Lengkap (Rutin & Terarsip Rapih)</option>
-                <option value="4">Skor 4 - Lengkap (Pekerjaan Utama Rutin Ada)</option>
-                <option value="3">Skor 3 - Cukup (Hanya Zona Tertentu)</option>
-                <option value="2">Skor 2 - Kurang (Jarang Difoto)</option>
-                <option value="1">Skor 1 - Tidak Ada / Sangat Minim</option>
+                <option value="3">Skor 3 - Lengkap (Rutin & terarsip rapi tiap tahapan)</option>
+                <option value="2">Skor 2 - Cukup (Foto pekerjaan utama saja)</option>
+                <option value="1">Skor 1 - Minim / Tidak Ada</option>
               </select>
             </div>
 
@@ -559,11 +545,9 @@
             <div class="col-md-6">
               <label class="form-label small fw-bold">C4: Ketepatan Serah Terima / BAST <span class="text-danger">*</span></label>
               <select name="skor_bast" id="editSkorBast" class="form-select" required>
-                <option value="5">Skor 5 - Sempurna (Tepat Waktu Tanpa Catatan)</option>
-                <option value="4">Skor 4 - Catatan Ringan</option>
-                <option value="3">Skor 3 - Terlambat Ringan</option>
-                <option value="2">Skor 2 - Ada Catatan Perbaikan</option>
-                <option value="1">Skor 1 - Belum Ada BAST</option>
+                <option value="3">Skor 3 - Tepat Waktu (Lengkap & tanpa catatan revisi)</option>
+                <option value="2">Skor 2 - Catatan Ringan (Ada perbaikan minor)</option>
+                <option value="1">Skor 1 - Terlambat / Ada Catatan Signifikan</option>
               </select>
             </div>
 
@@ -571,11 +555,9 @@
             <div class="col-md-6">
               <label class="form-label small fw-bold">C6: Tingkat Kepuasan Klien / Owner <span class="text-danger">*</span></label>
               <select name="skor_kepuasan_klien" id="editSkorKepuasan" class="form-select" required>
-                <option value="5">Skor 5 - Sangat Puas (Puas Tanpa Catatan / Komplain)</option>
-                <option value="4">Skor 4 - Puas (Ada Masukan / Catatan Minor)</option>
-                <option value="3">Skor 3 - Cukup Puas</option>
-                <option value="2">Skor 2 - Kurang Puas (Ada Keluhan Signifikan)</option>
-                <option value="1">Skor 1 - Tidak Puas / Sangat Kecewa</option>
+                <option value="3">Skor 3 - Puas (Sesuai ekspektasi klien, tanpa komplain)</option>
+                <option value="2">Skor 2 - Cukup Puas (Ada masukan/keluhan minor)</option>
+                <option value="1">Skor 1 - Kurang Puas (Banyak keluhan/komplain)</option>
               </select>
             </div>
 
@@ -583,11 +565,9 @@
             <div class="col-md-6">
               <label class="form-label small fw-bold">C7: Penerapan K3 & Keselamatan Kerja <span class="text-danger">*</span></label>
               <select name="skor_k3" id="editSkorK3" class="form-select" required>
-                <option value="5">Skor 5 - Sangat Baik (Zero Accident + APD 100% Tertib)</option>
-                <option value="4">Skor 4 - Baik (Zero Accident + Teguran Lisan Ringan)</option>
-                <option value="3">Skor 3 - Cukup (Disiplin APD Sedang)</option>
-                <option value="2">Skor 2 - Kurang (Ada Cedera Ringan / APD Jarang Dipakai)</option>
-                <option value="1">Skor 1 - Buruk (Insiden Berat / K3 Diabaikan)</option>
+                <option value="3">Skor 3 - Baik (Zero accident + APD tertib 100%)</option>
+                <option value="2">Skor 2 - Cukup (Teguran lisan ringan, disiplin APD sedang)</option>
+                <option value="1">Skor 1 - Kurang (Ada insiden / K3 diabaikan)</option>
               </select>
             </div>
 
@@ -624,15 +604,23 @@ function bukaModalEdit(data) {
   document.getElementById('editNilaiRab').value = data.nilai_rab || '';
   document.getElementById('editTglMulai').value = data.tanggal_mulai || '';
   
-  let valC1 = data.progres_aktual || 5;
-  if (valC1 > 5) valC1 = Math.round(valC1 / 20);
+  function clampSkor3(val) {
+    let num = parseInt(val) || 3;
+    if (num > 3) return 3;
+    if (num < 1) return 1;
+    return num;
+  }
+
+  let valC1 = parseInt(data.progres_aktual) || 3;
+  if (valC1 > 3) valC1 = 3;
+  if (valC1 < 1) valC1 = 1;
   document.getElementById('editProgresAktual').value = valC1;
   
   document.getElementById('editBiayaRealisasi').value = data.biaya_realisasi || '';
-  document.getElementById('editSkorFoto').value = data.skor_foto_progres || 5;
-  document.getElementById('editSkorBast').value = data.skor_bast || 5;
-  document.getElementById('editSkorKepuasan').value = data.skor_kepuasan_klien || 5;
-  document.getElementById('editSkorK3').value = data.skor_k3 || 5;
+  document.getElementById('editSkorFoto').value = clampSkor3(data.skor_foto_progres);
+  document.getElementById('editSkorBast').value = clampSkor3(data.skor_bast);
+  document.getElementById('editSkorKepuasan').value = clampSkor3(data.skor_kepuasan_klien);
+  document.getElementById('editSkorK3').value = clampSkor3(data.skor_k3);
   document.getElementById('editTglAktual').value = data.tanggal_selesai_aktual || '';
 
   const modal = new bootstrap.Modal(document.getElementById('modalEditProyek'));

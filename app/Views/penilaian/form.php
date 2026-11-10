@@ -21,11 +21,11 @@
         <form action="<?= site_url('penilaian/' . $periode['id'] . '/' . $penilaian['proyek_id']) ?>" method="post" id="formPenilaian">
           <?= csrf_field() ?>
 
-          <!-- 1. Kurva S Progres Fisik -->
+          <!-- 1. Mutu & Progres Fisik -->
           <div class="p-3 bg-light rounded border mb-4">
             <h6 class="fw-bold mb-3 text-dark d-flex align-items-center gap-2">
               <span class="preview-badge-code">C1</span>
-              <span>Kurva S & Capaian Progres Fisik</span>
+              <span>Mutu & Capaian Progres Fisik</span>
             </h6>
             <div class="row g-3">
               <div class="col-md-6">
@@ -34,7 +34,7 @@
                   <input type="number" step="0.01" min="0.01" max="100" name="progres_rencana" id="inputProgresRencana" class="form-control mono-num" required value="<?= old('progres_rencana', $penilaian['progres_rencana']) ?>">
                   <span class="input-group-text">%</span>
                 </div>
-                <div class="form-text small" style="font-size:0.75rem;">Target kumulatif Kurva S pada tanggal penilaian.</div>
+                <div class="form-text small" style="font-size:0.75rem;">Target rencana pekerjaan pada tanggal penilaian.</div>
               </div>
               <div class="col-md-6">
                 <label class="form-label small fw-bold">Progres Aktual (%) <span class="text-danger">*</span></label>
@@ -81,20 +81,14 @@
             <div class="mb-2">
               <label class="form-label small fw-bold">Kelengkapan & Kerapihan Foto Progres Fisik <span class="text-danger">*</span></label>
               <select name="skor_foto_progres" id="inputSkorFoto" class="form-select" required>
-                <option value="5" <?= ((int)old('skor_foto_progres', $penilaian['skor_foto_progres'] ?? 5) === 5) ? 'selected' : '' ?>>
-                  Skor 5 - Sangat Lengkap & Rutin (setiap tahapan/zona terdokumentasi jelas & terarsip rapi)
+                <option value="3" <?= ((int)old('skor_foto_progres', min(3, (int)($penilaian['skor_foto_progres'] ?? 3))) === 3) ? 'selected' : '' ?>>
+                  Skor 3 - Lengkap & Rutin (setiap tahapan/zona terdokumentasi jelas & terarsip rapi)
                 </option>
-                <option value="4" <?= ((int)old('skor_foto_progres', $penilaian['skor_foto_progres'] ?? 5) === 4) ? 'selected' : '' ?>>
-                  Skor 4 - Lengkap (foto pekerjaan utama rutin ada, catatan minor)
+                <option value="2" <?= ((int)old('skor_foto_progres', min(3, (int)($penilaian['skor_foto_progres'] ?? 3))) === 2) ? 'selected' : '' ?>>
+                  Skor 2 - Cukup (foto pekerjaan utama rutin ada, terarsip standar)
                 </option>
-                <option value="3" <?= ((int)old('skor_foto_progres', $penilaian['skor_foto_progres'] ?? 5) === 3) ? 'selected' : '' ?>>
-                  Skor 3 - Cukup (hanya pekerjaan tertentu / area tertentu yang difoto)
-                </option>
-                <option value="2" <?= ((int)old('skor_foto_progres', $penilaian['skor_foto_progres'] ?? 5) === 2) ? 'selected' : '' ?>>
-                  Skor 2 - Kurang (foto jarang / tidak teratur, hanya saat ada kendala)
-                </option>
-                <option value="1" <?= ((int)old('skor_foto_progres', $penilaian['skor_foto_progres'] ?? 5) === 1) ? 'selected' : '' ?>>
-                  Skor 1 - Tidak Ada / Sangat Minim dokumentasi foto
+                <option value="1" <?= ((int)old('skor_foto_progres', min(3, (int)($penilaian['skor_foto_progres'] ?? 3))) === 1) ? 'selected' : '' ?>>
+                  Skor 1 - Minim / Tidak Ada dokumentasi foto
                 </option>
               </select>
             </div>
@@ -112,20 +106,14 @@
             <div class="mb-2">
               <label class="form-label small fw-bold">Kondisi Berita Acara Serah Terima (BAST) <span class="text-danger">*</span></label>
               <select name="skor_bast" id="inputSkorBast" class="form-select" required>
-                <option value="5" <?= ((int)old('skor_bast', $penilaian['skor_bast']) === 5) ? 'selected' : '' ?>>
-                  Skor 5 - BAST lengkap, tepat waktu, tanpa catatan perbaikan
+                <option value="3" <?= ((int)old('skor_bast', min(3, (int)($penilaian['skor_bast'] ?? 3))) === 3) ? 'selected' : '' ?>>
+                  Skor 3 - BAST lengkap, tepat waktu, tanpa catatan perbaikan
                 </option>
-                <option value="4" <?= ((int)old('skor_bast', $penilaian['skor_bast']) === 4) ? 'selected' : '' ?>>
-                  Skor 4 - BAST lengkap, tepat waktu, ada catatan ringan
+                <option value="2" <?= ((int)old('skor_bast', min(3, (int)($penilaian['skor_bast'] ?? 3))) === 2) ? 'selected' : '' ?>>
+                  Skor 2 - BAST lengkap, tepat waktu, ada catatan ringan
                 </option>
-                <option value="3" <?= ((int)old('skor_bast', $penilaian['skor_bast']) === 3) ? 'selected' : '' ?>>
-                  Skor 3 - BAST ada, terlambat ringan
-                </option>
-                <option value="2" <?= ((int)old('skor_bast', $penilaian['skor_bast']) === 2) ? 'selected' : '' ?>>
-                  Skor 2 - BAST ada, terlambat dan ada catatan perbaikan
-                </option>
-                <option value="1" <?= ((int)old('skor_bast', $penilaian['skor_bast']) === 1) ? 'selected' : '' ?>>
-                  Skor 1 - BAST belum ada
+                <option value="1" <?= ((int)old('skor_bast', min(3, (int)($penilaian['skor_bast'] ?? 3))) === 1) ? 'selected' : '' ?>>
+                  Skor 1 - BAST belum ada / terlambat dengan catatan belum tuntas
                 </option>
               </select>
             </div>
@@ -224,7 +212,7 @@
             </div>
           </div>
           <div class="text-white-50 small mt-1" style="font-size:0.72rem;" id="prevC3Sub">
-            Skor rubrik foto fisik (1 - 5)
+            Skor rubrik foto fisik (1 - 3)
           </div>
         </div>
 
@@ -240,7 +228,7 @@
             </div>
           </div>
           <div class="text-white-50 small mt-1" style="font-size:0.72rem;">
-            Skor rubrik BAST (1 - 5)
+            Skor rubrik BAST (1 - 3)
           </div>
         </div>
 

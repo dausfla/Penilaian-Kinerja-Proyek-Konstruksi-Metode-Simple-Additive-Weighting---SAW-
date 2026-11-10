@@ -486,7 +486,7 @@
                 <td class="fw-semibold">Mutu & Kualitas Hasil Fisik</td>
                 <td><span class="badge-benefit">Benefit</span></td>
                 <td><span class="weight-tag">20% (0,20)</span></td>
-                <td class="text-muted">Kerapihan Finishing & Struktur (Skor 1 - 5)</td>
+                <td class="text-muted">Kerapihan Finishing & Struktur (Skor 1 - 3)</td>
               </tr>
               <tr>
                 <td class="fw-bold text-dark">C2</td>
@@ -500,14 +500,14 @@
                 <td class="fw-semibold">Dokumentasi Foto Progres Lapangan</td>
                 <td><span class="badge-benefit">Benefit</span></td>
                 <td><span class="weight-tag">15% (0,15)</span></td>
-                <td class="text-muted">Kelengkapan & Kerapihan Arsip Foto (Skor 1 - 5)</td>
+                <td class="text-muted">Kelengkapan & Kerapihan Arsip Foto (Skor 1 - 3)</td>
               </tr>
               <tr>
                 <td class="fw-bold text-dark">C4</td>
                 <td class="fw-semibold">Ketepatan & Kualitas BAST</td>
                 <td><span class="badge-benefit">Benefit</span></td>
                 <td><span class="weight-tag">15% (0,15)</span></td>
-                <td class="text-muted">Kualitas Berita Acara Serah Terima (Skor 1 - 5)</td>
+                <td class="text-muted">Kualitas Berita Acara Serah Terima (Skor 1 - 3)</td>
               </tr>
               <tr>
                 <td class="fw-bold text-dark">C5</td>
@@ -521,14 +521,14 @@
                 <td class="fw-semibold">Tingkat Kepuasan Klien / Owner</td>
                 <td><span class="badge-benefit">Benefit</span></td>
                 <td><span class="weight-tag">10% (0,10)</span></td>
-                <td class="text-muted">Rating Kepuasan Pengguna / Owner (Skor 1 - 5)</td>
+                <td class="text-muted">Rating Kepuasan Pengguna / Owner (Skor 1 - 3)</td>
               </tr>
               <tr>
                 <td class="fw-bold text-dark">C7</td>
                 <td class="fw-semibold">Penerapan K3 & Keselamatan Kerja</td>
                 <td><span class="badge-benefit">Benefit</span></td>
                 <td><span class="weight-tag">10% (0,10)</span></td>
-                <td class="text-muted">Kepatuhan Standar SMKK & Zero Accident (Skor 1 - 5)</td>
+                <td class="text-muted">Kepatuhan Standar SMKK & Zero Accident (Skor 1 - 3)</td>
               </tr>
             </tbody>
           </table>

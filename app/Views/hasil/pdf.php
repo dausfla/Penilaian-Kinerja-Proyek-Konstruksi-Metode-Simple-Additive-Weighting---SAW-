@@ -463,7 +463,7 @@
                   <td class="text-center fw-bold">C1</td>
                   <td>Mutu & Kualitas Hasil Fisik</td>
                   <td class="text-center" style="font-size: 7px; color: #047857;">Benefit</td>
-                  <td class="text-right fw-bold"><?= (int)($h['progres_aktual'] ?? $h['c1']) ?> / 5</td>
+                  <td class="text-right fw-bold"><?= min(3, max(1, (int)($h['progres_aktual'] ?? $h['c1']))) ?> / 3</td>
                 </tr>
                 <tr>
                   <td class="text-center fw-bold">C2</td>
@@ -475,13 +475,13 @@
                   <td class="text-center fw-bold">C3</td>
                   <td>Dokumentasi Foto Progres Lapangan</td>
                   <td class="text-center" style="font-size: 7px; color: #047857;">Benefit</td>
-                  <td class="text-right fw-bold"><?= (int)($h['skor_foto_progres'] ?? $h['c3']) ?> / 5</td>
+                  <td class="text-right fw-bold"><?= min(3, max(1, (int)($h['skor_foto_progres'] ?? $h['c3']))) ?> / 3</td>
                 </tr>
                 <tr>
                   <td class="text-center fw-bold">C4</td>
                   <td>Ketepatan Berita Acara (BAST)</td>
                   <td class="text-center" style="font-size: 7px; color: #047857;">Benefit</td>
-                  <td class="text-right fw-bold"><?= (int)($h['skor_bast'] ?? $h['c4']) ?> / 5</td>
+                  <td class="text-right fw-bold"><?= min(3, max(1, (int)($h['skor_bast'] ?? $h['c4']))) ?> / 3</td>
                 </tr>
                 <tr>
                   <td class="text-center fw-bold">C5</td>
@@ -493,13 +493,13 @@
                   <td class="text-center fw-bold">C6</td>
                   <td>Tingkat Kepuasan Klien / Owner</td>
                   <td class="text-center" style="font-size: 7px; color: #047857;">Benefit</td>
-                  <td class="text-right fw-bold"><?= (int)($h['skor_kepuasan_klien'] ?? $h['c6'] ?? 5) ?> / 5</td>
+                  <td class="text-right fw-bold"><?= min(3, max(1, (int)($h['skor_kepuasan_klien'] ?? $h['c6'] ?? 3))) ?> / 3</td>
                 </tr>
                 <tr>
                   <td class="text-center fw-bold">C7</td>
                   <td>Penerapan Disiplin K3 Lapangan</td>
                   <td class="text-center" style="font-size: 7px; color: #047857;">Benefit</td>
-                  <td class="text-right fw-bold"><?= (int)($h['skor_k3'] ?? $h['c7'] ?? 5) ?> / 5</td>
+                  <td class="text-right fw-bold"><?= min(3, max(1, (int)($h['skor_k3'] ?? $h['c7'] ?? 3))) ?> / 3</td>
                 </tr>
               </tbody>
             </table>
@@ -515,15 +515,15 @@
     <table style="width: 100%; font-size: 8.5px; border-collapse: collapse;">
       <tr>
         <td style="width: 24%; font-weight: bold; color: #047857; vertical-align: top; padding: 2px 0;">Kategori Baik:</td>
-        <td style="color: #334155; vertical-align: top; padding: 2px 0;">Kinerja proyek berjalan prima sesuai jadwal kurva rencana dan anggaran RAB terkendali efisien. Pertahankan SOP pengawasan mutu fisik dan kepuasan klien sebagai standar acuan portofolio perusahaan.</td>
+        <td style="color: #334155; vertical-align: top; padding: 2px 0;">Pekerjaan fisik rapi, biaya terkendali aman sesuai pagu RAB, dan proyek selesai tepat waktu. Pertahankan standar mutu kerja dan koordinasi tim lapangan.</td>
       </tr>
       <tr>
         <td style="font-weight: bold; color: #b45309; vertical-align: top; padding: 3px 0;">Kategori Perlu Perhatian:</td>
-        <td style="color: #334155; vertical-align: top; padding: 3px 0;">Terdapat deviasi ringan pada serapan anggaran RAB atau penundaan jadwal serah terima (BAST). Direkomendasikan evaluasi berkala mingguan (site meeting) dan pengetatan pengawasan material.</td>
+        <td style="color: #334155; vertical-align: top; padding: 3px 0;">Terdapat catatan pada mutu hasil kerja, pengeluaran mendekati pagu RAB, atau waktu pengerjaan sedikit molor. Segera lakukan pengecekan langsung ke lokasi proyek.</td>
       </tr>
       <tr>
         <td style="font-weight: bold; color: #b91c1c; vertical-align: top; padding: 3px 0;">Kategori Berisiko:</td>
-        <td style="color: #334155; vertical-align: top; padding: 3px 0;">Memerlukan intervensi manajemen segera: percepatan durasi kerja (crashing / fast-tracking), audit biaya realisasi lapangan, audit kepatuhan K3 keselamatan kerja, serta evaluasi mandor / subkontraktor pelaksana.</td>
+        <td style="color: #334155; vertical-align: top; padding: 3px 0;">Perlu penanganan dan tindakan segera! Terjadi keterlambatan waktu, biaya membengkak melebihi RAB, atau mutu di bawah standar. Segera evaluasi kendala lapangan dan tambah tenaga kerja.</td>
       </tr>
     </table>
   </div>

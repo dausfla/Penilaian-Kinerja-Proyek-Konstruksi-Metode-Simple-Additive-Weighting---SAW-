@@ -230,7 +230,7 @@
                 <i class="bi bi-check-circle-fill"></i> Kategori Baik (Skor Minimal <?= number_format($batasBaik, 2) ?> ke Atas)
               </div>
               <p class="small text-muted mb-0">
-                Proyek berjalan sesuai Kurva S, efisiensi anggaran terjaga, dan dokumentasi foto lapangan lengkap. Pertahankan ritme kerja dan koordinasi mitra.
+                Pekerjaan fisik rapi, biaya terkendali aman sesuai pagu RAB, dan proyek selesai tepat waktu. Pertahankan standar mutu kerja dan koordinasi tim lapangan.
               </p>
             </div>
           </div>
@@ -240,7 +240,7 @@
                 <i class="bi bi-exclamation-triangle-fill"></i> Perlu Perhatian (Skor <?= number_format($batasPerhatian, 2) ?> s/d <?= number_format($batasBaik - 0.01, 2) ?>)
               </div>
               <p class="small text-muted mb-0">
-                Terdapat deviasi ringan pada progres fisik, kenaikan pengeluaran biaya, atau keterlambatan waktu serah terima. Lakukan rapat evaluasi berkala segera.
+                Terdapat catatan pada mutu hasil kerja, pengeluaran mendekati pagu RAB, atau waktu pengerjaan sedikit molor. Segera lakukan pengecekan langsung ke lokasi proyek.
               </p>
             </div>
           </div>
@@ -250,7 +250,7 @@
                 <i class="bi bi-exclamation-octagon-fill"></i> Berisiko / Terlambat (Skor di Bawah <?= number_format($batasPerhatian, 2) ?>)
               </div>
               <p class="small text-muted mb-0">
-                Prioritas intervensi penanganan segera! Terapkan percepatan jadwal, penambahan tenaga kerja, evaluasi hambatan teknis, dan audit pengeluaran RAB.
+                Perlu penanganan dan tindakan segera! Terjadi keterlambatan waktu, biaya membengkak melebihi RAB, atau mutu di bawah standar. Segera evaluasi kendala lapangan dan tambah tenaga kerja.
               </p>
             </div>
           </div>

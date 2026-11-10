@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <title>Masuk Sistem &bull; SPK Penilaian Kinerja Proyek PT Rancang Bangun Sedaya</title>
+  <title>Masuk Sistem &bull; SIPEKO - PT Rancang Bangun Sedaya</title>
   <link rel="icon" type="image/png" href="<?= base_url('images/logo-rbs-favicon.png') ?>">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -114,7 +114,8 @@
         <img src="<?= base_url('images/logo-rbs.png') ?>" alt="Logo PT Rancang Bangun Sedaya" style="max-height: 60px; width: auto; object-fit: contain;">
       </div>
     </div>
-    <h4 class="fw-bold mb-1 text-white">SPK Kinerja Proyek</h4>
+    <h4 class="fw-bold mb-0 text-white">SIPEKO</h4>
+    <p class="mb-1 text-warning-emphasis small fw-semibold" style="color: #fbbf24 !important;">Sistem Penilaian Kinerja Konstruksi</p>
     <p class="mb-0 text-white-50 small">PT Rancang Bangun Sedaya</p>
     <div class="badge bg-warning text-dark mt-2 px-3 py-1 fw-bold">
       <i class="bi bi-shield-lock-fill me-1"></i> Otentikasi Keamanan PIN

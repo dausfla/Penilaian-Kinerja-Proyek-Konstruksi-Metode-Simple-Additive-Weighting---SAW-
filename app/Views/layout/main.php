@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <title><?= esc($title ?? 'SPK Kinerja Proyek') ?> &bull; PT Rancang Bangun Sedaya</title>
+  <title><?= esc($title ?? 'SIPEKO - Penilaian Kinerja Konstruksi') ?> &bull; PT Rancang Bangun Sedaya</title>
   
   <!-- Favicon / Brand Icon -->
   <link rel="icon" type="image/png" href="<?= base_url('images/logo-rbs-favicon.png') ?>">
@@ -27,8 +27,8 @@
         <img src="<?= base_url('images/logo-rbs.png') ?>" alt="Logo PT Rancang Bangun Sedaya" style="max-height: 38px; width: auto; object-fit: contain;">
       </div>
       <div class="ms-1">
-        <div class="brand-text-main">SPK PROYEK</div>
-        <div class="brand-text-sub">Rancang Bangun Sedaya</div>
+        <div class="brand-text-main">SIPEKO</div>
+        <div class="brand-text-sub">PT Rancang Bangun Sedaya</div>
       </div>
     </a>
 

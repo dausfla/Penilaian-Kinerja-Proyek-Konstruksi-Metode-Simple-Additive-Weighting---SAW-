@@ -389,11 +389,6 @@
     </div>
 
     <div class="container py-4">
-      <div class="system-badge">
-        <i class="bi bi-shield-check"></i>
-        <span>Sistem Pendukung Keputusan Resmi &bull; Metode SAW</span>
-      </div>
-
       <h1 class="hero-title">SIPEKO</h1>
       <div class="hero-subtitle">Sistem Penilaian Kinerja Konstruksi</div>
 
